@@ -151,11 +151,11 @@ def sampling_fliter_machine(df,numberOfSample=0,proportion=0,double_hour=False):
                 print("Data length is: {}\n".format( len(accumulator)  ))
             else:
                 if(proportion>0):
-                length=int(len(set_)*proportion)
+                   length=int(len(set_)*proportion)
                    if(double_hour==True):
                       if((j==3) or (j==8) or (j==14) or (j==17)):
-                         if(length<len(set_)):
-                            sample=resample(set_,n_samples=numberOfSample*2,replace=False,random_state=0)
+                         if(length*2<len(set_)):
+                            sample=resample(set_,n_samples=length*2,replace=False,random_state=0)
                          else:
                             sample=resample(set_,n_samples=len(set_),replace=False,random_state=0)
                       else:
