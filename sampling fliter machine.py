@@ -99,6 +99,9 @@ def geography_processing(df):
 import json
 from sklearn.utils import resample
 def sampling_fliter_machine(df,numberOfSample=0,proportion=0,double_hour=False,random_state=0):
+    """
+    double_hour is to emphazie particular hour or not
+    """
     accumulator=[]
     data=df.copy()
     data=time_processing(data)
