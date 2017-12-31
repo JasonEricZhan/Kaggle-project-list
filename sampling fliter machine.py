@@ -199,3 +199,10 @@ plt.hist(sampling_data['POLYLINE_time_second'],bins=10,normed=True)
 plt.xlabel('POLYLINE_time_second')
 
 
+
+%matplotlib inline
+import matplotlib.pyplot as plt;
+plt.title('Travel time, if ceiling is 10000')
+plt.hist(sampling_data['hour_in_day'],bins=10,normed=True)
+plt.xlabel('POLYLINE_time_second')
+
