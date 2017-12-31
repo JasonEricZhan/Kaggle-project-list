@@ -98,7 +98,7 @@ def geography_processing(df):
 
 import json
 from sklearn.utils import resample
-def sampling_fliter_machine(df,numberOfSample=0,proportion=0,double_hour=False):
+def sampling_fliter_machine(df,numberOfSample=0,proportion=0,double_hour=False,random_state=0):
     accumulator=[]
     data=df.copy()
     data=time_processing(data)
@@ -136,13 +136,13 @@ def sampling_fliter_machine(df,numberOfSample=0,proportion=0,double_hour=False):
                        if(double_hour==True):
                           if((j==3) or (j==8) or (j==14) or (j==17)):
                             if(numberOfSample*2<len(set_)):
-                                sample=resample(set_,n_samples=numberOfSample*2,replace=False,random_state=0)
+                                sample=resample(set_,n_samples=numberOfSample*2,replace=False,random_state=random_state)
                             else:
-                                sample=resample(set_,n_samples=len(set_),replace=False,random_state=0)
+                                sample=resample(set_,n_samples=len(set_),replace=False,random_state=random_state)
                           else:
-                            sample=resample(set_,n_samples=numberOfSample,replace=False,random_state=0)
+                            sample=resample(set_,n_samples=numberOfSample,replace=False,random_state=random_state)
                        else:
-                          sample=resample(set_,n_samples=numberOfSample,replace=False,random_state=0)
+                          sample=resample(set_,n_samples=numberOfSample,replace=False,random_state=random_state)
                     if i==0 and j==2:
                        accumulator=sample
                     else:
@@ -155,13 +155,13 @@ def sampling_fliter_machine(df,numberOfSample=0,proportion=0,double_hour=False):
                    if(double_hour==True):
                       if((j==3) or (j==8) or (j==14) or (j==17)):
                          if(length*2<len(set_)):
-                            sample=resample(set_,n_samples=length*2,replace=False,random_state=0)
+                            sample=resample(set_,n_samples=length*2,replace=False,random_state=random_state)
                          else:
-                            sample=resample(set_,n_samples=len(set_),replace=False,random_state=0)
+                            sample=resample(set_,n_samples=len(set_),replace=False,random_state=random_state)
                       else:
-                          sample=resample(set_,n_samples=length,replace=False,random_state=0)
+                          sample=resample(set_,n_samples=length,replace=False,random_state=random_state)
                    else:
-                       sample=resample(set_,n_samples=length,replace=False,random_state=0)
+                       sample=resample(set_,n_samples=length,replace=False,random_state=random_state)
                 else:
                   break
                 if i==0 and j==2:
@@ -178,7 +178,7 @@ def sampling_fliter_machine(df,numberOfSample=0,proportion=0,double_hour=False):
 # In[34]:
 
 import numpy as np
-sampling_data=sampling_fliter_machine(df,proportion=0.2,double_hour=True)
+sampling_data=sampling_fliter_machine(df,proportion=0.2,double_hour=True,random_state=0)
 
 
 # In[30]:
