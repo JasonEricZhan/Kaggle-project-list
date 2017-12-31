@@ -149,7 +149,7 @@ def sampling_fliter_machine(df,numberOfSample=0,proportion=0,double_hour=False,r
                             sample=resample(set_,n_samples=numberOfSample,replace=False,random_state=random_state)
                        else:
                           sample=resample(set_,n_samples=numberOfSample,replace=False,random_state=random_state)
-                    sample.sort_values(['TIMESTAMP'])
+                    sample=sample.sort_values(['TIMESTAMP'])
                     if i==0 and j==2:
                        accumulator=sample
                     else:
@@ -171,7 +171,7 @@ def sampling_fliter_machine(df,numberOfSample=0,proportion=0,double_hour=False,r
                        sample=resample(set_,n_samples=length,replace=False,random_state=random_state)
                 else:
                   break
-                sample.sort_values(['TIMESTAMP'])
+                sample=sample.sort_values(['TIMESTAMP'])
                 if i==0 and j==2:
                   accumulator=sample
                 else:
