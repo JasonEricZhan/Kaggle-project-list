@@ -160,7 +160,7 @@ def sampling_fliter_machine(df,numberOfSample=0,proportion=0,double_hour=False):
                             sample=resample(set_,n_samples=len(set_),replace=False,random_state=0)
                       else:
                           sample=resample(set_,n_samples=length,replace=False,random_state=0)
-                    else:
+                   else:
                        sample=resample(set_,n_samples=length,replace=False,random_state=0)
                 else:
                   break
