@@ -1,5 +1,5 @@
 """
-Edit and create by Eric
+Author:Edited and create by Eric
 
 """
 # coding: utf-8
