@@ -134,20 +134,20 @@ def sampling_fliter_machine(df,numberOfSample=0,proportion=0,double_hour=False,r
                print("**Warning: month"+str(i)+" hour "+str(j)+" 's data is empty**")
                break
             if(numberOfSample>0):
-               if len(set_)<numberOfSample:
-                   print("**Little Warning: month"+str(i)+" hour "+str(j)+" 's data is not enough**")
-                   sample=set_
-               else:
-                   if(double_hour==True):
-                      if((j==3) or (j==8) or (j==14) or (j==17)):
-                          if(numberOfSample*2<len(set_)):
-                              sample=resample(set_,n_samples=numberOfSample*2,replace=False,random_state=random_state)
-                          else:
-                              sample=resample(set_,n_samples=len(set_),replace=False,random_state=random_state)
-                       else:
-                         sample=resample(set_,n_samples=numberOfSample,replace=False,random_state=random_state)
-                   else:
-                      sample=resample(set_,n_samples=numberOfSample,replace=False,random_state=random_state)
+                if len(set_)<numberOfSample:
+                    print("**Little Warning: month"+str(i)+" hour "+str(j)+" 's data is not enough**")
+                    sample=set_
+                else:
+                    if(double_hour==True):
+                        if((j==3) or (j==8) or (j==14) or (j==17)):
+                            if(numberOfSample*2<len(set_)):
+                                sample=resample(set_,n_samples=numberOfSample*2,replace=False,random_state=random_state)
+                            else:
+                                sample=resample(set_,n_samples=len(set_),replace=False,random_state=random_state)
+                        else:
+                            sample=resample(set_,n_samples=numberOfSample,replace=False,random_state=random_state)
+                    else:
+                        sample=resample(set_,n_samples=numberOfSample,replace=False,random_state=random_state)
                 sample=sample.sort_values(['TIMESTAMP'])
                 if i==0 and j==2:
                      accumulator=sample
@@ -157,28 +157,27 @@ def sampling_fliter_machine(df,numberOfSample=0,proportion=0,double_hour=False,r
                 print("Data length is: {}\n".format( len(accumulator)  ))
             else:
                 if(proportion>0):
-                   if(double_hour==True):
-                      if((j==3) or (j==8) or (j==14) or (j==17)):
-                         if(length*2<len(set_)):
-                            sample=resample(set_,n_samples=length*2,replace=False,random_state=random_state)
-                         else:
-                            sample=resample(set_,n_samples=len(set_),replace=False,random_state=random_state)
-                      else:
-                          sample=resample(set_,n_samples=length,replace=False,random_state=random_state)
-                   else:
-                       sample=resample(set_,n_samples=length,replace=False,random_state=random_state)
+                    if(double_hour==True):
+                            if((j==3) or (j==8) or (j==14) or (j==17)):
+                                if(length*2<len(set_)):
+                                    sample=resample(set_,n_samples=length*2,replace=False,random_state=random_state)
+                                else:
+                                    sample=resample(set_,n_samples=len(set_),replace=False,random_state=random_state)
+                            else:
+                                sample=resample(set_,n_samples=length,replace=False,random_state=random_state)
+                    else:
+                         sample=resample(set_,n_samples=length,replace=False,random_state=random_state)
                 else:
-                  print("**Warning: proportion is zero**")
-                  break
+                    print("**Warning: proportion is zero**")
+                    break
                 sample=sample.sort_values(['TIMESTAMP'])
                 if i==0 and j==2:
-                  accumulator=sample
+                     accumulator=sample
                 else:
-                  accumulator=pd.concat([accumulator,sample],axis=0)
+                     accumulator=pd.concat([accumulator,sample],axis=0)
                 print("-------> "+str(j)+" hour is complete")
                 print("Data length is: {}\n".format( len(accumulator)  ))
-    return accumulator
-            
+    return accumulator            
     
 
 
