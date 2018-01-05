@@ -184,7 +184,7 @@ def sampling_fliter_machine(df,numberOfSample=0,proportion=0,double_hour=False,r
 # In[34]:
 
 import numpy as np
-sampling_data=sampling_fliter_machine(df,proportion=0.2,double_hour=True,random_state=0)
+sampling_data=sampling_fliter_machine(df,proportion=0.1,double_hour=True,random_state=0)
 
 
 # In[30]:
