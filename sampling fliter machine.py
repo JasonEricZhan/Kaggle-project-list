@@ -187,6 +187,8 @@ import numpy as np
 sampling_data=sampling_fliter_machine(df,proportion=0.2,double_hour=True,random_state=0)
 
 
+#if you don't want to deal missing data
+sampling_data=sampling_data[sampling_data['MISSING_DATA']==False]
 # In[30]:
 
 get_ipython().magic(u'matplotlib inline')
