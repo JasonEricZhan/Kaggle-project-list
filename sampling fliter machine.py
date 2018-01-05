@@ -117,14 +117,14 @@ def sampling_fliter_machine(df,numberOfSample=0,proportion=0,double_hour=False,r
         data_month['POLYLINE'] = data_month['POLYLINE'].apply(json.loads)
         data_month=geography_processing(data_month)
             #print(data_month.describe())
-        data_month=data_month.loc[data_month['start_longitude']<=-7]
-        data_month=data_month.loc[data_month['start_longitude']>=-9]
-        data_month=data_month.loc[data_month['start_latitude']>=40]
-        data_month=data_month.loc[data_month['start_latitude']<=42]
-        data_month=data_month.loc[data_month['end_longitude']<=-7]
-        data_month=data_month.loc[data_month['end_longitude']>=-9]
-        data_month=data_month.loc[data_month['end_latitude']>=40]
-        data_month=data_month.loc[data_month['end_latitude']<=42]
+        data_month=data_month[data_month['start_longitude']<=-7]
+        data_month=data_month[data_month['start_longitude']>=-9]
+        data_month=data_month[data_month['start_latitude']>=40]
+        data_month=data_month[data_month['start_latitude']<=42]
+        data_month=data_month[data_month['end_longitude']<=-7]
+        data_month=data_month[data_month['end_longitude']>=-9]
+        data_month=data_month[data_month['end_latitude']>=40]
+        data_month=data_month[data_month['end_latitude']<=42]
         print("Now is "+str(i)+" month:")
         for j in range(2,18):
             set_=data_month.loc[data_month['hour_in_day']==j]
