@@ -212,3 +212,5 @@ plt.title('Travel time, if ceiling is 10000')
 plt.hist(sampling_data['hour_in_day'],bins=10,normed=True)
 plt.xlabel('POLYLINE_time_second')
 
+#saving memory
+del df
