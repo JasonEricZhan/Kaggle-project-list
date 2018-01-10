@@ -42,6 +42,7 @@ for i in np.arange(0,10,2):
   count_prev=count_prev+length_first_month     #move one month 
 
   model = Sequential()
+  #It will double the nodes number automatically
   model.add(Bidirectional(LSTM(128,recurrent_dropout=0.3,
                               return_sequences = True),input_shape=(1,train.shape[2])))
   model.add(Dropout(0.2))
@@ -56,7 +57,8 @@ for i in np.arange(0,10,2):
   model.add(Dropout(0.2))
   
   model.add(Bidirectional(LSTM(32,recurrent_dropout=0.3,
-                              return_sequences = False)))
+                              return_sequences = False)))    
+  #not return all sequences,so the artificail neural can averaging the bidirectional LSTM units 
   model.add(Dropout(0.2))
   model.add(Dense(1))
   model.add(Activation('linear'))
@@ -72,7 +74,7 @@ for i in np.arange(0,10,2):
                       epochs=40,shuffle=False,callbacks=[earlystop])
   pred=model.predict(val)
   
-  ##code validation for NN model
+  ##code of validation plot for NN model
   print(history.history.keys())
   plt.plot(history.history['loss'])
   plt.plot(history.history['val_loss'])
