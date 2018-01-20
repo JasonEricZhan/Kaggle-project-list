@@ -66,6 +66,7 @@ for i in np.arange(0,10,2):
  
   
   adam=Adam(lr=0.001, beta_1=0.9, beta_2=0.999, epsilon=1e-08, decay=0.0,clipvalue=0.0015)
+  #clipvalue is nearly abitary set here, just give some look at each epochs make set the number ,not do much experiement
   model.compile(loss='mean_squared_logarithmic_error', optimizer=adam,metrics =['mae'])
   
 
