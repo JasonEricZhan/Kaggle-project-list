@@ -4,6 +4,7 @@ from multiprocessing import Pool
 #add to the list
 #df there is pandas data frame
 
+#compute pass the hot point or not
 hot_point=[[-8.61470,41.14660],[-8.616,41.141],[-8.60658,41.14724],[-8.624817,41.177124],[-8.64927,41.170653],[-8.6382,41.159151],
           [-8.624817,41.177124],[-8.64927,41.170653],[-8.6382,41.159151]]
           
@@ -26,7 +27,7 @@ def pass_hot_point(lonlat):
        for i in range(0,length):
            for j in range(0,len_hot):
                dist=get_dist(lonlat[i],hot_point[j])
-               if(dist<0.1):
+               if(dist<0.1):   #bias set to 100 meters
                      return True
                else:
                     pass
