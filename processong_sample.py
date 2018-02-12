@@ -179,6 +179,7 @@ def clean(comment):
     comment = re.sub(r"wtf","what the fuck", comment)
     comment = re.sub(r"i ' m", "I am", comment)
     comment=re.sub(r"mothjer","mother",comment)
+    comment = re.sub(r"d isagree","disagree", comment)
     s=comment
     s = re.sub(r'([\'\"\.\(\)\!\?\-\\\/\,])', r' \1 ', s)
     # Remove some special characters
