@@ -1,6 +1,6 @@
 # Machine-learning-kaggle-
 
-<b>competition and project list</b>
+## competition and project list
 
 ### 1.NTUST Machine Learning Class final project:
 taxi travel time prediction:
