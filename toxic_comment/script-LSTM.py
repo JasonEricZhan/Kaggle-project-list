@@ -508,22 +508,6 @@ for word, i in tokenizer.word_index.items():
         words_not_found.append(word)
 print('number of null word embeddings: %d' % np.sum(np.sum(embedding_matrix, axis=1) == 0))
 
-
-
-    
-
-
-col=['count_sent','count_unique_word','count_letters',"count_punctuations","count_words_upper","count_words_title","count_stopwords","mean_word_len",'word_unique_percent','punct_percent',"dirty_word_freq_count"]#"dirty_word_similarity"]
-
-
-
-df=df.replace([np.inf, -np.inf], np.nan)
-
-print("....start....normalize")
-print(df.isnull().sum())
-
-
-
 print("complete preprocess")
 
 
@@ -612,37 +596,6 @@ print(device_lib.list_local_devices())
 
 from numpy.random import seed
 seed(1)
-
-
-from seq2seq.models import Seq2Seq
-from seq2seq.models import AttentionSeq2Seq
-
-from keras import initializers
-class AttLayer(Layer):
-    def __init__(self, **kwargs):
-        self.init = initializers.get('normal')
-        #self.input_spec = [InputSpec(ndim=3)]
-        super(AttLayer, self).__init__(**kwargs)
-
-    def build(self, input_shape):
-        assert len(input_shape)==3
-        #self.W = self.init((input_shape[-1],1))
-        self.W = self.init((input_shape[-1],))
-        #self.input_spec = [InputSpec(shape=input_shape)]
-        self.trainable_weights = [self.W]
-        super(AttLayer, self).build(input_shape)  # be sure you call this somewhere!
-
-    def call(self, x, mask=None):
-        eij = K.tanh(K.dot(x, self.W))
-        
-        ai = K.exp(eij)
-        weights = ai/K.sum(ai, axis=1).dimshuffle(0,'x')
-        
-        weighted_input = x*weights.dimshuffle(0,1,'x')
-        return weighted_input.sum(axis=1)
-
-    def get_output_shape_for(self, input_shape):
-        return (input_shape[0], input_shape[-1])
 
 
 import keras.backend as K
