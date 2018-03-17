@@ -1,7 +1,15 @@
+
+
+
+
+
+
+#Navie K-fold
 from sklearn.metrics import roc_auc_score
 K_fold=10
 pred_val_accumulator=test_accumulator=None
 accumulator=[]
+
 for i in range(1,int(K_fold+1)):
     print("=================================")
     print("Start on: "+str(i)+" fold")
