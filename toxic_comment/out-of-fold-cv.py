@@ -1,6 +1,18 @@
+from sklearn.metrics import roc_auc_score
+K_fold=split
+pred_val_accumulator=test_accumulator=None
+accumulator=[]
 
+#Better for validation
+from sklearn.model_selection import KFold
 
+kf = KFold(n_splits=10,shuffle=True,random_state=42)
 
+for train_index, val_index in kf.split(np.zeros(train.shape[0])):
+    c_train_x=X_tr[train_index]
+    c_train_y=y_tr[train_index]
+    c_val_X = X_tr[val_index]
+    c_val_y = y_tr[val_index]
 
 
 
