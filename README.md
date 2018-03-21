@@ -10,4 +10,4 @@ https://drive.google.com/file/d/1tpoc2SBicbYMHocW-jSdp_-8ND1n2U-5/view
 
 ### 2.Toxic Comment Classification Challenge:
 https://www.kaggle.com/c/jigsaw-toxic-comment-classification-challenge</br>
-#### File name:toxic comment
+#### File name:toxic_comment
