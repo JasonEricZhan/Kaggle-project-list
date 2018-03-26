@@ -32,10 +32,14 @@ import numpy as np
 
 from multiprocessing import Pool
 
-num_partitions = 8 #number of partitions to split dataframe
-num_cores = 4 #number of cores on your machine
 
-
+def parallelize_dataframe(df, func):
+    df_split = np.array_split(df, num_partitions)
+    pool = Pool(num_cores)
+    df = pd.concat(pool.map(func, df_split))
+    pool.close()
+    pool.join()
+    return df
 
 def multiply_columns_lemmatize_sentence(data):
     data=data.apply(lambda x:lemmatize_sentence(x))
@@ -44,5 +48,5 @@ def multiply_columns_lemmatize_sentence(data):
 #parallelize 4 core nearly 13 minutes, and don't need to do it every time, just run it at once, except doing different preprocess
 corpus= parallelize_dataframe(corpus, multiply_columns_lemmatize_sentence)
 #store it back to the disk
-pickle.dump(corpus,open("tmp.pkl", "wb"))
-corpus=pickle.load(open("tmp.pkl", "rb")) 
+pickle.dump(corpus,open("tmpWordNetlem.pkl", "wb"))
+corpus=pickle.load(open("tmpWordNetlem.pkl", "rb")) 
