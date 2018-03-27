@@ -157,8 +157,7 @@ from nltk.stem.wordnet import WordNetLemmatizer
 lem = WordNetLemmatizer()
 
 stop_words = ['the','a','an','and','but','if','or','because','as','what','which','this','that','these','those','then',
-              'just','so','than','such','both','through','about','for','is','of','while','during','to','What','Which',
-              'Is','If','While','This']
+              'just','so','than','such','both','through','about','for','is','of','while','during','to']
 
 import string
 
