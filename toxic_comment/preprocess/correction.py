@@ -18,8 +18,7 @@ df=merge.reset_index(drop=True)
 import os, re, csv, math, codecs
 print('loading word embeddings...')
 embeddings_index = {}
-#f = codecs.open('crawl-300d-2M.vec', encoding='utf-8')
-#f = codecs.open('wiki.en.vec', encoding='utf-8')
+#ranking index 
 f = codecs.open('glove.840B.300d.txt', encoding='utf-8')
 from tqdm import tqdm
 for line in tqdm(f):
