@@ -53,7 +53,7 @@ def P(word):    #part from CPMP
     # returns 0 if the word isn't in the dictionary
     return - WORDS.get(word, 0)
 
-#second method, suitable for any others, like fastext wiki
+#second method, origin, suitable for any others, like fastext wiki
 def P(word, N=sum(WORDS.values())): 
     "Probability of `word`."
     return WORDS[word] / N
