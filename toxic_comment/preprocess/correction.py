@@ -19,6 +19,7 @@ import os, re, csv, math, codecs
 print('loading word embeddings...')
 embeddings_index = {}
 #ranking index 
+#from https://nlp.stanford.edu/pubs/glove.pdf the glove is use modeled as a power-law function of the frequency rank of that word pair
 f = codecs.open('glove.840B.300d.txt', encoding='utf-8')
 from tqdm import tqdm
 for line in tqdm(f):
@@ -45,12 +46,19 @@ import pickle
 
 corpus=pickle.load(open("tmp_clean.pkl", "rb")) 
 
-
-def P(word): 
+#first method
+def P(word):    #part from CPMP
     "Probability of `word`."
     # use inverse of rank as proxy
     # returns 0 if the word isn't in the dictionary
     return - WORDS.get(word, 0)
+
+#second method, suitable for any others, like fastext wiki
+def P(word, N=sum(WORDS.values())): 
+    "Probability of `word`."
+    return WORDS[word] / N
+
+
 
 def correction(word,lower=4,upper=10): 
     "Most probable spelling correction for word."
