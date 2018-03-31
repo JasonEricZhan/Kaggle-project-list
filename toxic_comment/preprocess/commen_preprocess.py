@@ -175,13 +175,15 @@ re_tok = re.compile(r'([�鎿�𤲞阬威鄞捍朝溘甄蝓壇螞¯岑�''
 import re
 
 def substitute_repeats_fixed_len(text, nchars, ntimes=4):
-        # Find substrings that consist of `nchars` non-space characters
-        # and that are repeated at least `ntimes` consecutive times,
-        # and replace them with a single occurrence.
-        # Examples: 
-        # abbcccddddeeeee -> abcde (nchars = 1, ntimes = 2)
-        # abbcccddddeeeee -> abbcde (nchars = 1, ntimes = 3)
-        # abababcccababab -> abcccab (nchars = 2, ntimes = 2)
+         """"
+         Find substrings that consist of `nchars` non-space characters
+         and that are repeated at least `ntimes` consecutive times,
+         and replace them with a single occurrence.
+         Examples: 
+         abbcccddddeeeee -> abcde (nchars = 1, ntimes = 2)
+         abbcccddddeeeee -> abbcde (nchars = 1, ntimes = 3)
+         abababcccababab -> abcccab (nchars = 2, ntimes = 2)
+         """"
         return re.sub(r"(\S{{{}}})(\1{{{},}})".format(nchars, ntimes-1),
                       r"\1", text)
 
@@ -265,7 +267,6 @@ def clean(comment):
     words=[no_abbre[word] if word in APPO else word for word in words]
     words=[bad_wordBank[word] if word in bad_wordBank else word for word in words]
     words=[emoji[word] if word in repl else word for word in words]
-    words=[lem.lemmatize(word, "v") for word in words]
     words = [w for w in words if not w in stop_words]
     
     
