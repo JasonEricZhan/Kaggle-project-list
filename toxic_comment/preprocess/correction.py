@@ -113,7 +113,12 @@ def clean_correction(comment):
         if bool(regx.match(w)) and w not in record:
             w=correction(w)
             _init_.append(w)
-            record.add(w)
+            """ #save space version
+            if w not in WORDS:   
+                 record.add(w)
+            """
+                #quick version
+                record.add(w)
         else:
             _init_.append(w)
     words=_init_
