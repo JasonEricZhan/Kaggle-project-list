@@ -15,6 +15,8 @@ test = pd.read_csv('test.csv')
 merge=pd.concat([train,test])
 df=merge.reset_index(drop=True)
 
+
+#Assume using glove.840B.300d=======================================
 import os, re, csv, math, codecs
 print('loading word embeddings...')
 embeddings_index = {}
@@ -46,18 +48,39 @@ import pickle
 
 corpus=pickle.load(open("tmp_clean.pkl", "rb")) 
 
-#first method
+
 def P(word):    #part from CPMP
     "Probability of `word`."
     # use inverse of rank as proxy
     # returns 0 if the word isn't in the dictionary
     return - WORDS.get(word, 0)
+#=======================================================================
 
-#second method, origin, suitable for any others, like fastext wiki
-def P(word, N=sum(WORDS.values())): 
+
+#Assume not using glove.840B.300d=======================================
+#origin, suitable for any others, like fastext wiki
+import os, re, csv, math, codecs
+print('loading word embeddings...')
+embeddings_index = {}
+f = codecs.open('...', encoding='utf-8')
+
+from tqdm import tqdm
+for line in tqdm(f):
+    values = line.rstrip().rsplit(' ')
+    word = values[0]
+    coefs = np.asarray(values[1:], dtype='float32')
+    embeddings_index[word] = coefs
+f.close()
+print('found %s word vectors' % len(embeddings_index))
+
+WORDS=embeddings_index
+
+
+sum_of_words=len(WORDS)
+def P(word, N=sum_of_words): 
     "Probability of `word`."
     return WORDS[word] / N
-
+#=======================================================================
 
 
 def correction(word,lower=4,upper=10): 
