@@ -23,6 +23,7 @@ embeddings_index = {}
 #ranking index 
 #from https://nlp.stanford.edu/pubs/glove.pdf the glove is use modeled as a power-law function of the frequency rank of that word pair
 f = codecs.open('glove.840B.300d.txt', encoding='utf-8')
+#or any other word embedding index's order depend by the word frequency
 from tqdm import tqdm
 for line in tqdm(f):
     values = line.rstrip().rsplit(' ')
@@ -58,7 +59,7 @@ def P(word):    #part from CPMP
 
 
 #Assume not using glove.840B.300d=======================================
-#origin, suitable for any others, like fastext wiki
+#origin, suitable for any others, like fastext wiki, but recommend not use like this
 import os, re, csv, math, codecs
 print('loading word embeddings...')
 embeddings_index = {}
