@@ -182,52 +182,7 @@ test
 
 
 
-## reference
-af   Afrikaans                      eo      Esperanto  
-ar      Arabic                      en      English 
-hy      Armenian  
-be      Belarusian  
-bg      Bulgarian  
-ca      Catalan  
-zh-CN   Chinese (Simplified)  
-zh-TW   Chinese (Traditional)  
-hr      Croatian  
-cs      Czech  
-da      Danish  
-nl      Dutch  
-  
-lr=lang_eo      Esperanto  
-lr=lang_et      Estonian  
-lr=lang_tl      Filipino  
-lr=lang_fi      Finnish  
-lr=lang_fr      French  
-lr=lang_de      German  
-lr=lang_el      Greek  
-lr=lang_iw      Hebrew  
-lr=lang_hi      Hindi  
-lr=lang_hu      Hungarian  
-lr=lang_is      Icelandic  
-lr=lang_id      Indonesian  
-lr=lang_it      Italian  
-lr=lang_ja    Japanese  
-lr=lang_ko    Korean  
-lr=lang_lv    Latvian  
-lr=lang_lt    Lithuanian  
-lr=lang_no    Norwegian  
-lr=lang_fa    Persian  
-lr=lang_pl    Polish  
-lr=lang_pt    Portuguese  
-lr=lang_ro    Romanian  
-lr=lang_ru    Russian  
-lr=lang_sr    Serbian  
-lr=lang_sk    Slovak  
-lr=lang_sl    Slovenian  
-lr=lang_es    Spanish  
-lr=lang_sw    Swahili  
-lr=lang_sv    Swedish  
-lr=lang_th    Thai  
-lr=lang_tr    Turkish  
-lr=lang_uk    Ukrainian  
-lr=lang_vi    Vietnamese  
+## language tag reference:
+See:https://sites.google.com/site/tomihasa/google-language-codes  
 
 
