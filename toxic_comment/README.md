@@ -183,32 +183,32 @@ test
 
 
 ## reference
-lr=lang_af    Afrikaans  
-lr=lang_ar    Arabic  
-lr=lang_hy    Armenian  
-lr=lang_be    Belarusian  
-lr=lang_bg    Bulgarian  
-lr=lang_ca    Catalan  
-lr=lang_zh-CN Chinese (Simplified)  
-lr=lang_zh-TW Chinese (Traditional)  
-lr=lang_hr    Croatian  
-lr=lang_cs    Czech  
-lr=lang_da    Danish  
-lr=lang_nl    Dutch  
-lr=lang_en    English  
-lr=lang_eo    Esperanto  
-lr=lang_et    Estonian  
-lr=lang_tl    Filipino  
-lr=lang_fi    Finnish  
-lr=lang_fr    French  
-lr=lang_de    German  
-lr=lang_el    Greek  
-lr=lang_iw    Hebrew  
-lr=lang_hi    Hindi  
-lr=lang_hu    Hungarian  
-lr=lang_is    Icelandic  
-lr=lang_id    Indonesian  
-lr=lang_it    Italian  
+af   Afrikaans  eo      Esperanto  
+ar      Arabic  en      English 
+hy      Armenian  
+be      Belarusian  
+bg      Bulgarian  
+ca      Catalan  
+zh-CN   Chinese (Simplified)  
+zh-TW   Chinese (Traditional)  
+hr      Croatian  
+cs      Czech  
+da      Danish  
+nl      Dutch  
+  
+lr=lang_eo      Esperanto  
+lr=lang_et      Estonian  
+lr=lang_tl      Filipino  
+lr=lang_fi      Finnish  
+lr=lang_fr      French  
+lr=lang_de      German  
+lr=lang_el      Greek  
+lr=lang_iw      Hebrew  
+lr=lang_hi      Hindi  
+lr=lang_hu      Hungarian  
+lr=lang_is      Icelandic  
+lr=lang_id      Indonesian  
+lr=lang_it      Italian  
 lr=lang_ja    Japanese  
 lr=lang_ko    Korean  
 lr=lang_lv    Latvian  
