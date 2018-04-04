@@ -2,8 +2,8 @@
 ****
 ## train
 
-|language|occurance|   
-|--------|---------|   
+|language|occurance|language|occurance|    
+|--------|---------|--------|---------|   
 |'en'    | 158954  |   
 |'ny'    |      1  |   
 |'mg'    |      2  |   
