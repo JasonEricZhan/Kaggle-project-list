@@ -722,42 +722,7 @@ def parallelize_dataframe(df, func):
 
 df=merge.reset_index(drop=True)
 
-"""
-import re
-df['count_sent']=df["comment_text"].apply(lambda x: len(re.findall("\n",str(x)))+1)
-#Word count in each comment:
-df['count_word']=df["comment_text"].apply(lambda x: len(str(x).split()))
-#Unique word count
-df['count_unique_word']=df["comment_text"].apply(lambda x: len(set(str(x).split())))
-#Letter count
-df['count_letters']=df["comment_text"].apply(lambda x: len(str(x)))
-#punctuation count 
-df["count_punctuations"] =df["comment_text"].apply(lambda x: len([c for c in str(x) if c in string.punctuation]))
-#upper case words count
-df["count_words_upper"] = df["comment_text"].apply(lambda x: len([w for w in str(x).split() if w.isupper()]))
-#title case words count
-df["count_words_title"] = df["comment_text"].apply(lambda x: len([w for w in str(x).split() if w.istitle()]))
-#Number of stopwords
-df["count_stopwords"] = df["comment_text"].apply(lambda x: len([w for w in str(x).lower().split() if w in eng_stopwords]))
-#Average length of the words
-df["mean_word_len"] = df["comment_text"].apply(lambda x: np.mean([len(w) for w in str(x).split()]))
 
-df["mean_word_len"] =df["mean_word_len"].fillna(0)
-
-
-df['word_unique_percent']=df['count_unique_word']*100/(df['count_word']+1)
-#derived features
-#Punct percent in each comment:
-df['punct_percent']=df['count_punctuations']*100/(df['count_word']+1)
-
-df["count_words_lower"] = df["comment_text"].apply(lambda x: len([w for w in str(x).split() if w.islower()]))
-
-
-
-
-
-print("....set..dirtyWBank")
-"""
 
 #f=open('dirtyWord_bank2.txt',"rt")
 
