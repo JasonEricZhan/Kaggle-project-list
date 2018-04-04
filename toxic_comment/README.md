@@ -1,7 +1,8 @@
 train
-{'en': 158954,
-'ny': 1, 
-'mg': 2, 
+|language|occurance|
+|'en'| 158954|
+|'ny'| 1 |
+|'mg'| 2 |
 'et': 2, 
 'ha': 3, 
 'ig': 4, 
