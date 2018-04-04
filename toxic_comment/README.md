@@ -183,8 +183,8 @@ test
 
 
 ## reference
-af   Afrikaans  eo      Esperanto  
-ar      Arabic  en      English 
+af   Afrikaans                      eo      Esperanto  
+ar      Arabic                      en      English 
 hy      Armenian  
 be      Belarusian  
 bg      Bulgarian  
