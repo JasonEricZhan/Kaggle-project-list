@@ -2,9 +2,9 @@
 ****
 ## train
 
-|language|occurance|language|occurance|    
-|--------|---------|--------|---------|   
-|'en'    | 158954  |   
+|language|occurance|language|occurance|language|occurance|language|occurance|language|occurance|language|occurance|     
+|--------|---------|--------|---------|--------|---------|--------|---------|--------|---------|--------|---------|   
+|'en'    | 158954  |'ro'    | 14  |'en'    | 158954  |'en'    | 158954  |'en'    | 158954  |'en'    | 158954  |   
 |'ny'    |      1  |   
 |'mg'    |      2  |   
 |'et'    |      2  |
@@ -15,9 +15,7 @@
 
 
 
-'et': 2, 
-'ha': 3, 
-'ig': 4, 
+
 'ro': 14, 
 'su': 1, 
 'id': 6, 
