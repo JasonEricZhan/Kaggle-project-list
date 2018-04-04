@@ -1,4 +1,4 @@
-# Machine-learning-kaggle-
+# Kaggle-project-list
 
 ## competition and project list
 
