@@ -2,11 +2,11 @@
 ****
 ## train
 
-|language|occurance|
-|--------|---------|
-|'en'    | 158954  |
-|'ny'    |      1  |
-|'mg'    |      2  |
+|language|occurance|   |language|occurance|
+|--------|---------|   |--------|---------|
+|'en'    | 158954  |   |'et'    |      2  |
+|'ny'    |      1  |   |'ha'    |      3  |
+|'mg'    |      2  |   |'ig'    |      4  |
 
 ****
 
