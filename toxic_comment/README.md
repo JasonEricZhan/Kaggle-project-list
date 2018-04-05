@@ -16,7 +16,7 @@
  
 ****
 
-## multi language occurance in toxic data
+## multi language occurance in toxic data (by sentence):
 
 |language|occurance|
 |--------|---------|
