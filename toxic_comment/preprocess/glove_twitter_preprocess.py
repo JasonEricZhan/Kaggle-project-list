@@ -6,7 +6,8 @@ import pandas as pd
 def glove_twitter_preprocess(text):
     """
     adapted from https://nlp.stanford.edu/projects/glove/preprocess-twitter.rb
-
+    
+    #part from Dieter
     """
     # Different regex parts for smiley faces
     eyes = "[8:=;]"
