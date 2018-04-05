@@ -32,7 +32,7 @@ oof_GRU=pickle.load(open("prediction_GRU.pkl", "rb"))
 oof_GRU_LSTM=pickle.load(open("test_average_LSTM.pkl", "rb"))
 
 
-
+#=============================Example===================================
 
 container_before=oof_CNN  #change to other fold file
 length_before=0
