@@ -724,50 +724,6 @@ df=merge.reset_index(drop=True)
 
 
 
-#f=open('dirtyWord_bank2.txt',"rt")
-
-
-
-
-#df["dirty_word_similarity"]= parallelize_dataframe(df["comment_text"], multiply_columns_similarity)
-
-
-
-
-#import cPickle as pickle 
-#pickle.dump(df, open("tmp_df.pkl", "wb")) 
-
-
-#df=pickle.load(open("tmp_df.pkl", "rb")) 
-
-
-
-
-print("set ngram feature")
-
-
-
-
-#pickle.dump(corpus,open("tmp_tweet_glove_noWordNet.pkl", "wb"))
-
-print("dump 1-1")
-
-#corpus=pickle.load(open("tmp_tweet_glove_noWordNet.pkl", "rb")) 
-
-#parallelize_dataframe(corpus, multiply_columns_lemmatize_sentence)
-
-#train_Ngram=create_docs(train_cl, n_gram_max=3)   #data type is list
-#test_Ngram=create_docs(test_cl, n_gram_max=3)
-
-
-
-
-#test_cl=test_cl.reset_index(drop=True)
-
-#dtrain, dval = train_test_split(train_cl, random_state=2345, train_size=0.8)
-
-
-
 
 
 
@@ -790,14 +746,6 @@ train_cl=df[:train.shape[0]]
 test_cl=df[train.shape[0]:]
 
 
-#train_Ngram=np.array(train_Ngram)
-#test_Ngram=np.array(test_Ngram)
-
-#merge_Ngram=np.hstack(train_Ngram,test_Ngram)
-
-#df["comment_text"].iloc[:train.shape[0]]=train_Ngram
-#df["comment_text"].iloc[train.shape[0]:]=test_Ngram
-
 
 df['count_sent']=df["comment_text"].apply(lambda x: len(re.findall(" ",str(x)))+1)
 df['count_word']=df["comment_text"].apply(lambda x: len(str(x).split()))
@@ -806,10 +754,6 @@ df['avg_sent_length']=df['count_word']/df['count_sent']
 print(df['count_sent'].describe())
 print(df['count_word'].describe())
 print(df['avg_sent_length'].describe())
-
-
-#corpus_gram=df["comment_text"]
-#corpus_gram=parallelize_dataframe(corpus_raw, multiply_columns_char_ngram)
 
 
 
@@ -852,38 +796,9 @@ PAD_CHAR = '℗'
 
 
 
-#train["comment_text"]=df["comment_text"].iloc[:train.shape[0]]
 
 
 
-#print("toxic number: "+str(train['clean'].value_counts()))
-
-#print(len(train.loc[train['clean']==0]))
-
-#toxic_corpus=train.loc[train['clean']==0,"comment_text"]
-
-
-#print(toxic_corpus)
-
-#corpus_clean_char=parallelize_dataframe(corpus_raw,multiply_columns_clean_char)
-
-#char2index, index2char = create_char_vocabulary(corpus)
-
-#char_corpus=parallelize_dataframe(corpus, multiply_columns_char_ngram)
-
-#df["char"]=char_corpus
-
-#print(df["char"])
-
-
-
-
-
-
-
-
-#sentences_train=char_corpus.iloc[:train.shape[0]]
-#sentences_test=char_corpus.iloc[train.shape[0]:]
 
 totalNumWords = [len(one_comment) for one_comment in sentences_train]
 print("X_tr_2 mean length:"+ str(np.mean(totalNumWords )))
