@@ -22,89 +22,25 @@ from keras import backend as K
 from nltk.stem import SnowballStemmer
 stemmer = SnowballStemmer('english')
 
-embed_size = 300 # how big is each word vector
-max_features = 160000 # how many unique words to use (i.e num rows in embedding vector)
+embed_size = 300 
+max_features = 160000 
+maxlen=180
+
 
 
 train = pd.read_csv('train.csv')
 test = pd.read_csv('test.csv')
 
 
-
-
-
-
-class_names = list(train)[-6:]
-multarray = np.array([100000, 10000, 1000, 100, 10, 1])
-y_multi = np.sum(train[class_names].values * multarray, axis=1)
-
-print(class_names)
-
-print(y_multi)
-
-
-from sklearn.model_selection import StratifiedKFold
-splits = 10
-skf = StratifiedKFold(n_splits=splits, shuffle=True, random_state=42)
-
-# produce two lists of ids. each list has n items where n is the 
-#    number of folds and each item is a pandas series of indexed id numbers
-train_ids = [] 
-val_ids = []
-for i, (train_idx, val_idx) in enumerate(skf.split(np.zeros(train.shape[0]), y_multi)):
-    train_ids.append(train.loc[train_idx, 'id'])
-    val_ids.append(train.loc[val_idx, 'id'])
-
-
-from sklearn.model_selection import train_test_split
-
-x=train.iloc[:,2:].sum()
-#marking comments without any tags as "clean"
-rowsums=train.iloc[:,2:].sum(axis=1)
-train['clean']=(rowsums==0)
-
-
-
-import string
-
-from nltk.corpus import stopwords
-
-eng_stopwords = set(stopwords.words("english"))
-
-
-
 merge=pd.concat([train,test])
 df=merge.reset_index(drop=True)
-
-
-merge["comment_text"]=merge["comment_text"].fillna("_na_").values
-
-
-import pickle  
-#pickle.dump(df, open("tmp_df.pkl", "wb")) 
-
-
-#df=pickle.load(open("tmp_df.pkl", "rb")) 
-
-
-
-from gensim.models.wrappers import FastText
-
-import time
-
-start=time.time()
-
-corpus_raw=df['comment_text'].copy()
+corpus_raw=df.comment_text
 
 
 
 
 
-end=time.time()
 
-timeStep=end-start
-
-print("spend sencond: "+str(timeStep))
 
 
 APPO = {
@@ -246,11 +182,6 @@ tokenizer=TweetTokenizer()
 re_tok = re.compile(r'([1234567890!@#$%^&*_+-=,./<>?;:"[][}]"\'\\|�鎿�𤲞阬威鄞捍朝溘甄蝓壇螞¯岑�''\t])')
 
 
-import goslate
-gs = goslate.Goslate()
-
-
-
 
 
 
@@ -264,120 +195,6 @@ print(df['avg_sent_length'].describe())
 
 
 
-def glove_preprocess(text):
-    """
-    adapted from https://nlp.stanford.edu/projects/glove/preprocess-twitter.rb
-
-    """
-    # Different regex parts for smiley faces
-    eyes = "[8:=;]"
-    nose = "['`\-]?"
-    text = re.sub("https?://.* ", "<URL>", text)
-    text = re.sub("www.* ", "<URL>", text)
-    text = re.sub("/", " / ", text)
-    text = re.sub("\[\[User(.*)\|", '<USER>', text)
-    text = re.sub("<3", '<HEART>', text)
-    text = re.sub("[-+]?[.\d]*[\d]+[:,.\d]*", "<NUMBER>", text)
-    text = re.sub(eyes + nose + "[Dd)]", '<SMILE>', text)
-    text = re.sub("[(d]" + nose + eyes, '<SMILE>', text)
-    text = re.sub(eyes + nose + "p", '<LOLFACE>', text)
-    text = re.sub(eyes + nose + "\(", '<SADFACE>', text)
-    text = re.sub("\)" + nose + eyes, '<SADFACE>', text)
-    text = re.sub(eyes + nose + "[/|l*]", '<NEUTRALFACE>', text)
-    text = re.sub("[-+]?[.\d]*[\d]+[:,.\d]*", "<NUMBER>", text)
-    text = re.sub("([!]){2,}", "! <REPEAT>", text)
-    text = re.sub("([?]){2,}", "? <REPEAT>", text)
-    text = re.sub("([.]){2,}", ". <REPEAT>", text)
-    text = re.sub("(.)\1{2,}", "\1\1\1 <ELONG>", text)
-    pattern = re.compile(r"(.)\1{2,}")
-    text = pattern.sub(r"\1" + " <ELONG>", text)
-
-    return text
-
-
-
-
-from nltk.tokenize import RegexpTokenizer
-
-tokenizer = RegexpTokenizer(r'\w+')
-
-"""
-import os, re, csv, math, codecs
-print('loading word embeddings...')
-embeddings_index = {}
-#f = codecs.open('crawl-300d-2M.vec', encoding='utf-8')
-#f = codecs.open('wiki.en.vec', encoding='utf-8')
-f = codecs.open('glove.840B.300d.txt', encoding='utf-8')
-from tqdm import tqdm
-for line in tqdm(f):
-    values = line.rstrip().rsplit(' ')
-    word = values[0]
-    coefs = np.asarray(values[1:], dtype='float32')
-    embeddings_index[word] = coefs
-f.close()
-print('found %s word vectors' % len(embeddings_index))
-
-print('found %s word vectors' % embeddings_index.values)
-
-
-print('start to compute std, mean')
-
-
-words = embeddings_index
-
-w_rank = {}
-for i,word in enumerate(words):
-    w_rank[word] = i
-"""
-#WORDS = w_rank
-
-
-
-
-
-
-
-
-import re
-from collections import Counter
-
-def words(text): return re.findall(r'\w+', text.lower())
-
-def P(word): 
-    "Probability of `word`."
-    # use inverse of rank as proxy
-    # returns 0 if the word isn't in the dictionary
-    return - WORDS.get(word, 0)
-
-def correction(word,limit=10): 
-    "Most probable spelling correction for word."
-    if len(word)>limit:
-       return word
-    if word in WORDS:
-       return word
-    return max(candidates(word), key=P)
-
-def candidates(word): 
-    "Generate possible spelling corrections for word."
-    return (known([word]) or known(edits1(word)) or known(edits2(word)) or [word])
-
-def known(words): 
-    "The subset of `words` that appear in the dictionary of WORDS."
-    return set(w for w in words if w in WORDS)
-
-def edits1(word):
-    "All edits that are one edit away from `word`."
-    letters    = 'abcdefghijklmnopqrstuvwxyz'
-    splits     = [(word[:i], word[i:])    for i in range(len(word) + 1)]
-    deletes    = [L + R[1:]               for L, R in splits if R]
-    transposes = [L + R[1] + R[0] + R[2:] for L, R in splits if len(R)>1]
-    replaces   = [L + c + R[1:]           for L, R in splits if R for c in letters]
-    inserts    = [L + c + R               for L, R in splits for c in letters]
-    return set(deletes + transposes + replaces + inserts)
-
-def edits2(word): 
-    "All edits that are two edits away from `word`."
-    return (e2 for e1 in edits1(word) for e2 in edits1(e1))
 
 
 
@@ -409,18 +226,6 @@ def clean(comment):
     comment=re.sub("\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}","",comment)
     #removing usernames
     comment=re.sub("\[\[.*\]","",comment)
-    #comment = re.sub(r"what's", "", comment)
-    #comment = re.sub(r"What's", "", comment)
-    #comment = re.sub(r"\'s", " ", comment)
-    comment = re.sub(r"\'ve", " have ", comment)
-    #comment = re.sub(r"can't", "cannot ", comment)
-    comment = re.sub(r"n't", " not ", comment)
-    #comment = re.sub(r"I'm", "I am", comment)
-    #comment = re.sub(r" m ", " am ", comment)
-    #comment = re.sub(r"\'re", " are ", comment)
-    comment = re.sub(r"\'d", " would ", comment)
-    comment = re.sub(r"\'ll", " will ", comment)
-    comment = re.sub(r"ca not", "cannot", comment)
     comment = re.sub(r"you ' re", "you are", comment)
     comment = re.sub(r"wtf","what the fuck", comment)
     comment = re.sub(r"i ' m", "I am", comment)
@@ -428,17 +233,12 @@ def clean(comment):
     comment = re.sub(r"II", "two", comment)
     comment = re.sub(r"III", "three", comment)
     comment = re.sub(r'牛', "cow", comment)
-    #comment = re.sub(r"abt", "about", comment)
     comment=re.sub(r"mothjer","mother",comment)
     comment=re.sub(r"g e t  r i d  o f  a l l  i  d i d  p l e a s e  j a ck a s s",
                    "get rid of all i did please jackass",comment)
     comment=re.sub(r"nazi","nazy",comment)
     comment=re.sub(r"withought","with out",comment)
     s=comment
-    #s = re.sub(r'([\'\"\.\!\?\/\,])', r' \1 ', s)
-    # Remove some special characters
-    #s = re.sub(r'([\;\:\|•«\n])', ' ', s)
-    # Replace numbers and symbols with language #is worse
     
     s = s.replace('&', ' and ')
     s = s.replace('@', ' at ')
@@ -456,64 +256,24 @@ def clean(comment):
     
     comment=s
     comment = re_tok.sub(' ', comment)
-    #token='1234567890!@#$%^&*_+-=,./<>?;:"[][}]"\'\\|'
-
-    #comment=comment.replace(token," ")
-    #sub is replace in python
-    
-    
-    #Split the sentences into words
+   
     words=tokenizer.tokenize(comment)
     
-    #print(words)
-    # (')aphostophe  replacement (ie)   you're --> you are  
-    # ( basic dictionary lookup : master dictionary present in a hidden block of code)
+   
     words=[APPO[word] if word in APPO else word for word in words]
     words=[bad_wordBank[word] if word in bad_wordBank else word for word in words]
     words=[repl[word] if word in repl else word for word in words]
-    #print(words)
-    words=[lem.lemmatize(word, "v") for word in words]
-    #print(words)
     words = [w for w in words if not w in stop_words]
-    #print(words)
-    #
+   
     
     
     sent=" ".join(words)
-    # remove any non alphanum,digit character
-    #clean_sent=re.sub("\W+"," ",clean_sent)
-    #clean_sent=re.sub("  "," ",clean_sent)
-    #sent = re.sub(r'([\'\"\.\!\?\/\-\_\,])',' ', sent)
     sent = re.sub(r'([\'\"\/\-\_\--\_])',' ', sent)
     # Remove some special characters
     clean_sent= re.sub(r'([\;\|•«\n])',' ', sent)
     
     return(clean_sent)
 
-
-def clean_char(comment):
-    comment=comment.lower()
-    comment=re.sub(r"\n",".",comment)
-    comment=re.sub(r"\\n\n",".",comment)
-    comment=re.sub("\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}","",comment)
-    comment=re.sub("\[\[.*\]","",comment)
-    #comment = re_tok.sub(' ', comment)
-    words=tokenizer.tokenize(comment)
-    words=[APPO[word] if word in APPO else word for word in words]
-    words = [w for w in words if not w in stop_words]
-    
-    sent=" ".join(words)
-    #sent = re.sub(r'([\'\"\/\-\_\--\_])',' ', sent)
-    #clean_sent= re.sub(r'([\;\|•«\n])',' ', sent)
-    clean_sent=sent
-    return(clean_sent)
-
-
-def clean_correction(comment):
-    words=tokenizer.tokenize(comment)
-    words = [correction(w) for w in words]
-    sent=" ".join(words)
-    return(sent)
 
 
 
@@ -586,35 +346,11 @@ def multiply_columns_clean(data):
     data = data.apply(lambda x: clean(x))
     return data
 
-def multiply_columns_clean_And_lemmatize_sentence(data):
-    data = data.apply(lambda x: clean(x))
-    data=data.apply(lambda x:lemmatize_sentence(x))
-    return data
-
 def multiply_columns_lemmatize_sentence(data):
     data=data.apply(lambda x:lemmatize_sentence(x))
     return data
 
 
-
-def multiply_columns_glove_preprocess(data):
-    data = data.apply(lambda x: glove_preprocess(x))
-    return data
-
-def multiply_columns_count_sent(data):
-    temp = data.apply(lambda x: sent_len(x))
-    return temp
-    
-    
-def multiply_columns_correction(data):
-    data = data.apply(lambda x: clean_correction(x))
-    return data
-    
-    
-    
-def multiply_columns_clean_char(data):
-    data = data.apply(lambda x: clean_char(x))
-    return data    
     
     
 def sent_len(x):
@@ -627,30 +363,18 @@ def sent_len(x):
 
 
 
-#df['sent_length']=parallelize_dataframe(df["comment_text"], multiply_columns_clean)
 
-#df['sent_length']=parallelize_dataframe(corpus_raw, multiply_columns_count_sent)
-#print(df['sent_length'].describe())    
     
 import time
 
 start=time.time()
-#corpus= parallelize_dataframe(corpus_raw, multiply_columns_clean)
-#corpus= parallelize_dataframe(corpus, multiply_columns_clean_And_lemmatize_sentence)
-#pickle.dump(corpus,open("tmp_noWordNet.pkl", "wb"))
-#corpus_twitter= parallelize_dataframe(corpus, multiply_columns_glove_preprocess)
-#corpus=pickle.load(open("tmp_noWordNet.pkl", "rb")) 
+corpus= parallelize_dataframe(corpus_raw, multiply_columns_clean)
+corpus= parallelize_dataframe(corpus, multiply_columns_lemmatize_sentence)
+
 print("dump 1")
 
 
 
-#corpus =parallelize_dataframe(corpus, multiply_columns_correction)
-#pickle.dump(corpus,open("tmp_correction.pkl", "wb"))
-#corpus=pickle.load(open("tmp_correction.pkl", "rb")) 
-#corpus= parallelize_dataframe(corpus, multiply_columns_lemmatize_sentence)
-#pickle.dump(corpus,open("tmp_clean.pkl", "wb"))
-print("dump 2")
-#clean_corpus=corpus.apply(lambda x :clean(x))
 end=time.time()
 
 timeStep=end-start
@@ -658,88 +382,22 @@ timeStep=end-start
 print("spend sencond: "+str(timeStep))
 
 import  pickle 
-#pickle.dump(corpus,open("tmp.pkl", "wb"))
-
-
-corpus=pickle.load(open("tmp_clean.pkl", "rb")) 
-#corpus=pickle.load(open("tmp_noWordNet.pkl", "rb")) 
-
-
-clean_corpus = corpus
-list_classes = ["toxic", "severe_toxic", "obscene", "threat", "insult", "identity_hate"]
-
-
-#merge['comment_text']=clean_corpus
 
 
 
 
-df["comment_text"]=clean_corpus
-
-#df["twitter_comment_text"]=corpus_twitter
 
 
-def create_docs(df, n_gram_max=4):
-    def add_ngram(q, n_gram_max):
-            ngrams = []
-            for n in range(2, n_gram_max+1):
-                for w_index in range(len(q)-n+1):
-                    ngrams.append('--'.join(q[w_index:w_index+n]))
-            return q + ngrams
-        
-    docs = []
-    for doc in df["comment_text"]:
-#       preprocess already run
-#       doc = preprocess(doc).split()        
-        doc = doc.split()
-        docs.append(' '.join(add_ngram(doc, n_gram_max)))
-    
-    return docs
+df["comment_text"]=corpus
+
 
 
 print(df["comment_text"])
 print(df["comment_text"].isnull().sum())
-#print(type(df["comment_text"].iloc[99]))
+
 
 
 print("....set..indirect..feature")
-
-
-
-from multiprocessing import Pool
-
-num_partitions = 8 #number of partitions to split dataframe
-num_cores = 4 #number of cores on your machine
-
-def parallelize_dataframe(df, func):
-    df_split = np.array_split(df, num_partitions)
-    pool = Pool(num_cores)
-    df = pd.concat(pool.map(func, df_split))
-    pool.close()
-    pool.join()
-    return df
-
-
-df=merge.reset_index(drop=True)
-
-
-
-#f=open('dirtyWord_bank2.txt',"rt")
-
-
-
-
-#df["dirty_word_similarity"]= parallelize_dataframe(df["comment_text"], multiply_columns_similarity)
-
-
-
-
-#import cPickle as pickle 
-#pickle.dump(df, open("tmp_df.pkl", "wb")) 
-
-
-#df=pickle.load(open("tmp_df.pkl", "rb")) 
-
 
 
 
@@ -748,27 +406,24 @@ print("set ngram feature")
 
 
 
-#pickle.dump(corpus,open("tmp_tweet_glove_noWordNet.pkl", "wb"))
-
-print("dump 1-1")
-
-#corpus=pickle.load(open("tmp_tweet_glove_noWordNet.pkl", "rb")) 
-
-#parallelize_dataframe(corpus, multiply_columns_lemmatize_sentence)
-
-#train_Ngram=create_docs(train_cl, n_gram_max=3)   #data type is list
-#test_Ngram=create_docs(test_cl, n_gram_max=3)
+train_cl=df[:train.shape[0]]
+test_cl=df[train.shape[0]:]
 
 
 
+df['count_sent']=df["comment_text"].apply(lambda x: len(re.findall(" ",str(x)))+1)
+df['count_word']=df["comment_text"].apply(lambda x: len(str(x).split()))
 
-#test_cl=test_cl.reset_index(drop=True)
-
-#dtrain, dval = train_test_split(train_cl, random_state=2345, train_size=0.8)
+df['avg_sent_length']=df['count_word']/df['count_sent']
+print(df['count_sent'].describe())
+print(df['count_word'].describe())
+print(df['avg_sent_length'].describe())
 
 
 
 
+
+#===============char preprocessing================
 
 
 def char_ngram(word,ngram=2):
@@ -782,35 +437,13 @@ def char_ngram(word,ngram=2):
 
 def multiply_columns_char_ngram(data):
     data2 = data.apply(lambda x: char_ngram(str(x),ngram=4))
-    #data=data.apply(lambda x:lemmatize_sentence(x))
     return data2
 
 
-train_cl=df[:train.shape[0]]
-test_cl=df[train.shape[0]:]
 
 
-#train_Ngram=np.array(train_Ngram)
-#test_Ngram=np.array(test_Ngram)
-
-#merge_Ngram=np.hstack(train_Ngram,test_Ngram)
-
-#df["comment_text"].iloc[:train.shape[0]]=train_Ngram
-#df["comment_text"].iloc[train.shape[0]:]=test_Ngram
-
-
-df['count_sent']=df["comment_text"].apply(lambda x: len(re.findall(" ",str(x)))+1)
-df['count_word']=df["comment_text"].apply(lambda x: len(str(x).split()))
-
-df['avg_sent_length']=df['count_word']/df['count_sent']
-print(df['count_sent'].describe())
-print(df['count_word'].describe())
-print(df['avg_sent_length'].describe())
-
-
-#corpus_gram=df["comment_text"]
-#corpus_gram=parallelize_dataframe(corpus_raw, multiply_columns_char_ngram)
-
+corpus_gram=df["comment_text"]
+corpus_gram=parallelize_dataframe(corpus_raw, multiply_columns_char_ngram)
 
 
 
@@ -850,40 +483,11 @@ def char2seq(texts, maxlen):
 UNKNOWN_CHAR = 'ⓤ'
 PAD_CHAR = '℗'
 
+char2index, index2char = create_char_vocabulary(corpus_gram.values)
+sentences_train=corpus_gram.iloc[:train.shape[0]]
+sentences_test=corpus_gram.iloc[train.shape[0]:]
 
 
-#train["comment_text"]=df["comment_text"].iloc[:train.shape[0]]
-
-
-
-#print("toxic number: "+str(train['clean'].value_counts()))
-
-#print(len(train.loc[train['clean']==0]))
-
-#toxic_corpus=train.loc[train['clean']==0,"comment_text"]
-
-
-#print(toxic_corpus)
-
-#corpus_clean_char=parallelize_dataframe(corpus_raw,multiply_columns_clean_char)
-
-#char2index, index2char = create_char_vocabulary(corpus)
-
-#char_corpus=parallelize_dataframe(corpus, multiply_columns_char_ngram)
-
-#df["char"]=char_corpus
-
-#print(df["char"])
-
-
-
-
-
-
-
-
-#sentences_train=char_corpus.iloc[:train.shape[0]]
-#sentences_test=char_corpus.iloc[train.shape[0]:]
 
 totalNumWords = [len(one_comment) for one_comment in sentences_train]
 print("X_tr_2 mean length:"+ str(np.mean(totalNumWords )))
@@ -902,8 +506,8 @@ X_te_2 = char2seq(sentences_test,maxlen_char)
 
 
 
-
-train["char"]=char_corpus.iloc[:train.shape[0]]
+#tricky way to get the preprocessed data for training word2vec model
+train["comment_text"]=train_cl["comment_text"].iloc[:train.shape[0]]
 
 char_toxic=train.loc[train["clean"]==0,"char"]
 
@@ -914,62 +518,19 @@ model= Word2Vec(sentences=char_toxic, size=50, window=100, min_count=50, workers
 model.save('mymodel_toxic')
 
 
-weights=model.wv.syn0
+weights_char=model.wv.syn0
 
-np.save(open("self_train_weight_toxic.npz", 'wb'), weights)
-
-#weights_2 = np.load(open("self_train_weight.npz", 'rb'))
-
-#weights=np.load(open("self_train_weight_NoClean.npz", 'rb'))
-
-weights=np.load(open("self_train_weight_toxic.npz", 'rb'))
-
-##test_char_Ngram=df[train.shape[0]:]
+np.save(open("self_train_weight_toxic.npz", 'wb'), weights_char)
 
 
-#test_cl=test_cl.reset_index(drop=True)
-
-print("char gram")
-
-#df['count_word']=df["comment_text"].apply(lambda x: len(str(x).split()))
-#print(df['count_word'].describe())
-
-"""
-print("...original length of dtrain "+str(len(dtrain)))
-      
-      
-
-L = len(dtrain)
-df_irr = dtrain[dtrain.clean == 0]
-while len(dtrain) < 2*L:
-    dtrain = dtrain.append(df_irr, ignore_index=True)
-
-     
-
-print("...after length of dtrain "+str(len(dtrain)))
-      
+#weights_char=np.load(open("self_train_weight_toxic.npz", 'rb'))
 
 
-    
-print("...original length of dval "+str(len(dval)))
-      
-      
-
-L = len(dval)
-df_irr = dval[dval.clean == 0]
-while len(dval) < 2*L:
-    dval = dval.append(df_irr, ignore_index=True)
 
 
-     
-        
 
-print("...after length of dval "+str(len(dval)))
+#===============tokenize================
 
-    
-
-"""    
-    
 print("....start....tokenizer")
 
 list_classes = ["toxic", "severe_toxic", "obscene", "threat", "insult", "identity_hate"]
@@ -1016,8 +577,7 @@ print("mean length:"+ str(np.mean(totalNumWords )))
 print("max length:"+ str(max(totalNumWords) ) )
 print("std length:"+ str(np.std(totalNumWords )))
 
-#maxlen=400
-maxlen=180#int(np.mean(totalNumWords )+np.std(totalNumWords )*2+1)
+
 
 print(" maxlen is:"+str(maxlen))
 
@@ -1060,8 +620,8 @@ data=pd.concat([list_sentences_train,list_sentences_test])
 
 
 
-X_tr_1=X_tr#.reshape((-1,MAX_SENTS,MAX_SENT_LENGTH))
-X_te_1=X_te#.reshape((-1,MAX_SENTS,MAX_SENT_LENGTH))
+X_tr_1=X_tr
+X_te_1=X_te
 
 print('x_train_1 new shape:', X_tr_1.shape)
 print('x_test_1 new shape:', X_te_1.shape)
@@ -1117,7 +677,7 @@ def get_model():
     main_input=Input(shape=(maxlen,),name='main_input')#, name='main_input'
     Ngram_input= Input(shape=(maxlen_char,), name='aux_input')#, name='aux_input'
     embedded_sequences= Embedding(max_features, embed_size,weights=[embedding_matrix],trainable=False)(main_input)
-    embedded_sequences_2= Embedding(weights.shape[0], 50,weights=[weights],trainable=True)(Ngram_input)
+    embedded_sequences_2= Embedding(weights_char.shape[0], 50,weights=[weights_char],trainable=True)(Ngram_input)
     
     #word level
     hidden_dim=136

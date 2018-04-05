@@ -19,8 +19,6 @@ from keras.callbacks import EarlyStopping, ModelCheckpoint
 from keras.layers.core import Layer  
 from keras import initializers, regularizers, constraints  
 from keras import backend as K
-from nltk.stem import SnowballStemmer
-stemmer = SnowballStemmer('english')
 
 embed_size = 200 # how big is each word vector
 max_features = 180000 # how many unique words to use (i.e num rows in embedding vector)
@@ -73,10 +71,6 @@ end=time.time()
 timeStep=end-start
 
 print("spend sencond: "+str(timeStep))
-
-
-
-list_classes = ["toxic", "severe_toxic", "obscene", "threat", "insult", "identity_hate"]
 
 
 
@@ -155,18 +149,6 @@ for line in tqdm(f):
 f.close()
 print('found %s word vectors' % len(embeddings_index))
 
-print('found %s word vectors' % embeddings_index.values)
-
-
-print('start to compute std, mean')
-
-
-
-print('preparing embedding matrix...')
-words_not_found = []
-nb_words = min(max_features, len(tokenizer.word_index))
-print('number with words...'+str(nb_words))
-container_embeddings_index=list(embeddings_index.values())
 embedding_matrix = np.zeros((nb_words, embed_size))
 for word, i in tokenizer.word_index.items():
     if i >= nb_words:
@@ -259,67 +241,6 @@ sess = tf.Session(config=tf.ConfigProto(gpu_options=gpu_options))
 
 #set up keras session
 
-tf.keras.backend.set_session(sess)
-
-from tensorflow.python.client import device_lib
-print(device_lib.list_local_devices())
-
-
-from numpy.random import seed
-seed(1)
-
-
-import keras.backend as K
-
-def f1_score(y_true, y_pred):
-
-    # Count positive samples.
-    c1 = K.sum(K.round(K.clip(y_true * y_pred, 0, 1)))
-    c2 = K.sum(K.round(K.clip(y_pred, 0, 1)))
-    c3 = K.sum(K.round(K.clip(y_true, 0, 1)))
-
-    # If there are no true samples, fix the F1 score at 0.
-    if c3 == 0:
-        return 0
-
-    # How many selected items are relevant?
-    precision = c1 / c2
-
-    # How many relevant items are selected?
-    recall = c1 / c3
-
-    # Calculate f1_score
-    f1_score = 2 * (precision * recall) / (precision + recall)
-    return f1_score        
-    
-
-def binary_PFA(y_true, y_pred, threshold=K.variable(value=0.5)):
-    y_pred = K.cast(y_pred >= threshold, 'float32')
-    # N = total number of negative labels
-    N = K.sum(1 - y_true)
-    # FP = total number of false alerts, alerts from the negative class labels
-    FP = K.sum(y_pred - y_pred * y_true)    
-    return FP/N
-#-----------------------------------------------------------------------------------------------------------------------------------------------------
-# P_TA prob true alerts for binary classifier
-def binary_PTA(y_true, y_pred, threshold=K.variable(value=0.5)):
-    y_pred = K.cast(y_pred >= threshold, 'float32')
-    # P = total number of positive labels
-    P = K.sum(y_true)
-    # TP = total number of correct alerts, alerts from the positive class labels
-    TP = K.sum(y_pred * y_true)    
-    return TP/P
-
-
-def auc(y_true, y_pred):   
-    ptas = tf.stack([binary_PTA(y_true,y_pred,k) for k in np.linspace(0, 1, 1000)],axis=0)
-    pfas = tf.stack([binary_PFA(y_true,y_pred,k) for k in np.linspace(0, 1, 1000)],axis=0)
-    pfas = tf.concat([tf.ones((1,)) ,pfas],axis=0)
-    binSizes = -(pfas[1:]-pfas[:-1])
-    s = ptas*binSizes
-    return K.sum(s, axis=0)
-
-from keras.layers.advanced_activations import LeakyReLU, PReLU
 
 def get_model():
  
@@ -351,6 +272,6 @@ def get_model():
     return model
 
 
-#batch_size = 640
+batch_size = 640
 
 #total average roc_auc: 0.9875268030202132
