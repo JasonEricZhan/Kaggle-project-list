@@ -1,4 +1,4 @@
-# Run on machine and Software enviroment:
+# Run on which machine and software enviroment:
 
 GPU  GTx 1080 8GB is fine, 4 core cpu, ram at least 32 GB (for loading wiki.en.bin)
 
