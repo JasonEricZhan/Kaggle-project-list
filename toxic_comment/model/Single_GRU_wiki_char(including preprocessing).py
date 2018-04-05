@@ -698,7 +698,7 @@ def get_model():
     x_gru_1 = Bidirectional(CuDNNGRU(hidden_dim,recurrent_regularizer=regularizers.l2(1e-6),return_sequences=True))(x)
     
     #char level
-    hidden_dim=50
+    hidden_dim=30
     x_2=SpatialDropout1D(0.21)(embedded_sequences_2)                    #0.1
     x_gru_2 = Bidirectional(CuDNNGRU(hidden_dim,recurrent_regularizer=regularizers.l2(1e-8),return_sequences=True))(x_2)
 
