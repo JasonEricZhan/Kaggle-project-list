@@ -8,7 +8,7 @@ Glove:
 2.glove.twitter.27B.200D.txt
 
 
-## lb score:
+## lb score(mean columnwise AUCV):
 #### wiki.en.bin single gru:                               
 public:0.9860,   private:0.9847  
 #### wiki.en.bin and char word2vec single gru:             
