@@ -460,6 +460,7 @@ print(df['avg_sent_length'].describe())
 
 from collections import Counter
 
+# part from Dieter
 def create_char_vocabulary(texts,min_count_chars=50):
     counter = Counter()
     for k, text in enumerate(texts):
