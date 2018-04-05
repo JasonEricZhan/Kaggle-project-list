@@ -179,14 +179,10 @@ seed(1)
 
 
 
-
-def get_model():
-
+def bigru_pool_model():
     main_input=Input(shape=(maxlen,),name='main_input')#, name='main_input'
+    embedded_sequences= Embedding(max_features, embed_size,weights=[embedding_matrix],trainable=trainable)(main_input)
 
-    embedded_sequences= Embedding(max_features, embed_size,weights=[embedding_matrix],trainable=False)(main_input)
-
-    
     hidden_dim=136
     x=SpatialDropout1D(0.22)(embedded_sequences)                    #0.1
     x_gru_1 = Bidirectional(CuDNNGRU(hidden_dim,recurrent_regularizer=regularizers.l2(1e-6),return_sequences=True))(x)
@@ -211,6 +207,8 @@ def get_model():
                   metrics=['accuracy',f1_score,auc])
     print(model.summary())
     return model
+
+
 
 
 batch_size = 640

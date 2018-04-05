@@ -1,4 +1,13 @@
-# Data Abstract:
+## Top 5% solution
+# Run on which machine and software enviroment:
+
+GPU  GTx 1080 8GB is fine, 4 core cpu, ram at least 32 GB (for loading wiki.en.bin)
+
+python3, tensorflow 1.4, cuda 6
+
+(I mainly run on AWS p2.xlarge instance)
+
+# Data abstract:
 ****
 
 ## target label's occurance(toxic):
@@ -16,7 +25,7 @@
  
 ****
 
-## multi language occurance in toxic data (by sentence):
+## multi language occurance in toxic data (by comment):
 
 |language|occurance|
 |--------|---------|
@@ -63,7 +72,7 @@
 |zh-CN|2|
 
 
-## multi language occurance in the whole training set (by sentence)
+## multi language occurance in the whole training set (by comment)
 
 |language|occurance|
 |--------|---------|
@@ -137,7 +146,7 @@
 |zu|3|
 
 
-## multi language occurance in the whole testing set (by sentence)
+## multi language occurance in the whole testing set (by comment)
 
 |language|occurance|
 |--------|---------|
@@ -241,6 +250,8 @@
 
 ## language tag reference:
 See:https://sites.google.com/site/tomihasa/google-language-codes  
+
+*can be the base of which language should be translated
 
 ****
 

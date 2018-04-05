@@ -686,21 +686,24 @@ seed(1)
 
 
 
-def get_model():
+def bigru_pool_model_multi_input():
     main_input=Input(shape=(maxlen,),name='main_input')#, name='main_input'
     Ngram_input= Input(shape=(maxlen_char,), name='aux_input')#, name='aux_input'
     embedded_sequences= Embedding(max_features, embed_size,weights=[embedding_matrix],trainable=False)(main_input)
     embedded_sequences_2= Embedding(weights_char.shape[0], 50,weights=[weights_char],trainable=True)(Ngram_input)
     
     #word level
-    hidden_dim=136
+    hidden_dim_1=136,hidden_dim_2=50
     x=SpatialDropout1D(0.22)(embedded_sequences)                    #0.1
-    x_gru_1 = Bidirectional(CuDNNGRU(hidden_dim,recurrent_regularizer=regularizers.l2(1e-6),return_sequences=True))(x)
+    x_gru_1 = Bidirectional(CuDNNGRU(hidden_dim_1,recurrent_regularizer=regularizers.l2(1e-6),return_sequences=True))(x)
     
     #char level
+<<<<<<< HEAD
     hidden_dim=30
+=======
+>>>>>>> origin/master
     x_2=SpatialDropout1D(0.21)(embedded_sequences_2)                    #0.1
-    x_gru_2 = Bidirectional(CuDNNGRU(hidden_dim,recurrent_regularizer=regularizers.l2(1e-8),return_sequences=True))(x_2)
+    x_gru_2 = Bidirectional(CuDNNGRU(hidden_dim_2,recurrent_regularizer=regularizers.l2(1e-8),return_sequences=True))(x_2)
 
     
     x_ave_1=GlobalAveragePooling1D()(x_gru_1)
@@ -719,7 +722,7 @@ def get_model():
     x= Dense(6, activation="sigmoid",kernel_regularizer=regularizers.l2(1e-8))(x)
     
     model = Model(inputs=[main_input,Ngram_input], outputs=x)
-    nadam=Nadam(lr=0.0029, beta_1=0.9, beta_2=0.999, epsilon=None, schedule_decay=0.00325)
+    nadam=Nadam(lr=0.00262, beta_1=0.9, beta_2=0.999, epsilon=None, schedule_decay=0.00325)
     model.compile(loss='binary_crossentropy',
                   optimizer=nadam,
                   metrics=['accuracy',f1_score,auc])
@@ -727,7 +730,7 @@ def get_model():
     return model
 
 
-batch_size = 1600   #faster for char level embedding model
+batch_size = 1280   #faster for char level embedding model
 
 #total average roc_auc: 0.9888378030202132
 
