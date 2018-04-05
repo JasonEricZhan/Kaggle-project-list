@@ -686,21 +686,19 @@ seed(1)
 
 
 
-def get_model():
+def bigru_pool_model_multi_input(hidden_dim_1=136,hidden_dim_2=50):
     main_input=Input(shape=(maxlen,),name='main_input')#, name='main_input'
     Ngram_input= Input(shape=(maxlen_char,), name='aux_input')#, name='aux_input'
     embedded_sequences= Embedding(max_features, embed_size,weights=[embedding_matrix],trainable=False)(main_input)
     embedded_sequences_2= Embedding(weights_char.shape[0], 50,weights=[weights_char],trainable=True)(Ngram_input)
     
     #word level
-    hidden_dim=136
     x=SpatialDropout1D(0.22)(embedded_sequences)                    #0.1
-    x_gru_1 = Bidirectional(CuDNNGRU(hidden_dim,recurrent_regularizer=regularizers.l2(1e-6),return_sequences=True))(x)
+    x_gru_1 = Bidirectional(CuDNNGRU(hidden_dim_1,recurrent_regularizer=regularizers.l2(1e-6),return_sequences=True))(x)
     
     #char level
-    hidden_dim=50
     x_2=SpatialDropout1D(0.21)(embedded_sequences_2)                    #0.1
-    x_gru_2 = Bidirectional(CuDNNGRU(hidden_dim,recurrent_regularizer=regularizers.l2(1e-8),return_sequences=True))(x_2)
+    x_gru_2 = Bidirectional(CuDNNGRU(hidden_dim_2,recurrent_regularizer=regularizers.l2(1e-8),return_sequences=True))(x_2)
 
     
     x_ave_1=GlobalAveragePooling1D()(x_gru_1)
