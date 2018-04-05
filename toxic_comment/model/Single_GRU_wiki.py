@@ -179,10 +179,11 @@ seed(1)
 
 
 
-def bigru_pool_model(hidden_dim=136):
+def bigru_pool_model():
     main_input=Input(shape=(maxlen,),name='main_input')#, name='main_input'
     embedded_sequences= Embedding(max_features, embed_size,weights=[embedding_matrix],trainable=trainable)(main_input)
 
+    hidden_dim=136
     x=SpatialDropout1D(0.22)(embedded_sequences)                    #0.1
     x_gru_1 = Bidirectional(CuDNNGRU(hidden_dim,recurrent_regularizer=regularizers.l2(1e-6),return_sequences=True))(x)
     x_ave=GlobalAveragePooling1D()(x_gru_1)
