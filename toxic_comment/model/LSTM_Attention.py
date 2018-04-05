@@ -242,7 +242,7 @@ sess = tf.Session(config=tf.ConfigProto(gpu_options=gpu_options))
 #set up keras session
 
 
-def get_model():
+def lstm_attention():
  
     main_input=Input(shape=(maxlen,),name='main_input')
  
