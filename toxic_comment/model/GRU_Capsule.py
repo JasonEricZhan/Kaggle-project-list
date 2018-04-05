@@ -243,7 +243,7 @@ class Capsule(Layer):
 
 
 
-def get_model():
+def bigru_capsule():
  
     main_input=Input(shape=(maxlen,),name='main_input')#, name='main_input'
 
