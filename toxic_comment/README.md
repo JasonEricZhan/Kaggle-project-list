@@ -12,7 +12,7 @@
 
 |type|occurance|type|occurance|
 |----|---------|----|---------|
-|not toxic|        |toxic|        |
+|not toxic|143346  |toxic| 16225|
  
 ****
 
