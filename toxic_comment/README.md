@@ -248,5 +248,7 @@ python3, tensorflow 1.4, cuda 6
 ## language tag reference:
 See:https://sites.google.com/site/tomihasa/google-language-codes  
 
+*can be the base of which language should transfer
+
 ****
 
