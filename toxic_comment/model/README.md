@@ -25,7 +25,7 @@ public:0.9847,   private:0.9841
 #### final ensemble:
 stacking with 7 models(one from teamate John Miller, lgbm lb public score: 0.9820)
 
-ensemble step:
-1.0.5*DPCNN+ 0.5*Capsule, and get the new out of fold (new out of fold--no.1) 
-2.0.5*single gru+ 0.5*wiki.en.bin and char word2vec single gru, and get the new out of fold (new out of fold--no.2) 
-3.stacking new out of fold--no.1, new out of fold--no.2, LSTM attention and skip connected channel, and lgbm
+ensemble step:  
+1.0.5*DPCNN+ 0.5*Capsule, and get the new out of fold (new out of fold--no.1)   
+2.0.5*single gru+ 0.5*wiki.en.bin and char word2vec single gru, and get the new out of fold (new out of fold--no.2)   
+3.stacking new out of fold--no.1, new out of fold--no.2, LSTM attention and skip connected channel, and lgbm  
