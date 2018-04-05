@@ -1,12 +1,22 @@
 # Data Abstract:
+****
 
+## target label's occurance(toxic):
 
+|label|occurance|label|occurance|label|occurance|
+|-----|---------|-----|---------|-----|---------|
+|toxic|15294|servere toxic|1595|obscene|8449|
+|threat|478|insult|7877|identity hate|1405|
 
+## toxic and not toxic data occurance:
 
+|type|occurance|type|occurance|
+|----|---------|----|---------|
+|not toxic|        |toxic|        |
  
 ****
 
-## multi language in the training set
+## multi language in the training set (by sentence)
 
 |language|occurance|
 |--------|---------|
@@ -80,7 +90,7 @@
 |zu|3|
 
 
-## multi language in the testing set
+## multi language in the testing set (by sentence)
 
 |language|occurance|
 |--------|---------|
