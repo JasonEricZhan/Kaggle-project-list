@@ -1,6 +1,6 @@
 # Run on machine:
 
-GTx 1080 8GB or Tesla 11GB
+GTx 1080 8GB or Tesla 11GB, 4 core cpu, ram at least 32 GB
 
 
 # Data abstract:
