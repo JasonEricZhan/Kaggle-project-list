@@ -65,7 +65,7 @@ corpus_twitter= parallelize_dataframe(corpus_pre1, multiply_columns_glove_twitte
 pickle.dump(corpus_twitter,open("tmp_noWordNet_twitter.pkl", "wb"))
 corpus_twitter=pickle.load(open("tmp_noWordNet_twitter.pkl", "rb")) 
 
-print("dump 1")
+
 
 
 end=time.time()
@@ -85,6 +85,13 @@ df["comment_text"]=corpus_twitter
 
 
 
+train_cl=df[:train.shape[0]]
+test_cl=df[train.shape[0]:]
+
+list_classes = ["toxic", "severe_toxic", "obscene", "threat", "insult", "identity_hate"]
+y_tr = train_cl[list_classes].values      
+list_sentences_train=train_cl.comment_text
+list_sentences_test=test_cl.comment_text
 
 
 print("....At....Tokenizer")

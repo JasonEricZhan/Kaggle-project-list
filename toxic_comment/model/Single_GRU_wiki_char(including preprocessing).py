@@ -1112,66 +1112,10 @@ from numpy.random import seed
 seed(1)
 
 
-import keras.backend as K
-
-def f1_score(y_true, y_pred):
-
-    # Count positive samples.
-    c1 = K.sum(K.round(K.clip(y_true * y_pred, 0, 1)))
-    c2 = K.sum(K.round(K.clip(y_pred, 0, 1)))
-    c3 = K.sum(K.round(K.clip(y_true, 0, 1)))
-
-    # If there are no true samples, fix the F1 score at 0.
-    if c3 == 0:
-        return 0
-
-    # How many selected items are relevant?
-    precision = c1 / c2
-
-    # How many relevant items are selected?
-    recall = c1 / c3
-
-    # Calculate f1_score
-    f1_score = 2 * (precision * recall) / (precision + recall)
-    return f1_score        
-    
-
-def binary_PFA(y_true, y_pred, threshold=K.variable(value=0.5)):
-    y_pred = K.cast(y_pred >= threshold, 'float32')
-    # N = total number of negative labels
-    N = K.sum(1 - y_true)
-    # FP = total number of false alerts, alerts from the negative class labels
-    FP = K.sum(y_pred - y_pred * y_true)    
-    return FP/N
-#-----------------------------------------------------------------------------------------------------------------------------------------------------
-# P_TA prob true alerts for binary classifier
-def binary_PTA(y_true, y_pred, threshold=K.variable(value=0.5)):
-    y_pred = K.cast(y_pred >= threshold, 'float32')
-    # P = total number of positive labels
-    P = K.sum(y_true)
-    # TP = total number of correct alerts, alerts from the positive class labels
-    TP = K.sum(y_pred * y_true)    
-    return TP/P
-
-
-def auc(y_true, y_pred):   
-    ptas = tf.stack([binary_PTA(y_true,y_pred,k) for k in np.linspace(0, 1, 1000)],axis=0)
-    pfas = tf.stack([binary_PFA(y_true,y_pred,k) for k in np.linspace(0, 1, 1000)],axis=0)
-    pfas = tf.concat([tf.ones((1,)) ,pfas],axis=0)
-    binSizes = -(pfas[1:]-pfas[:-1])
-    s = ptas*binSizes
-    return K.sum(s, axis=0)
-
-from keras.layers.advanced_activations import LeakyReLU, PReLU
 
 def get_model():
-    #embed_size = 128
-    #1, maxlen,
-    #maxlen=MAX_SENT_LENGTH
     main_input=Input(shape=(maxlen,),name='main_input')#, name='main_input'
-    #maxlen=MAX_SENT_LENGTH_2
     Ngram_input= Input(shape=(maxlen_char,), name='aux_input')#, name='aux_input'
-    #sentence_input=main_input
     embedded_sequences= Embedding(max_features, embed_size,weights=[embedding_matrix],trainable=False)(main_input)
     embedded_sequences_2= Embedding(weights.shape[0], 50,weights=[weights],trainable=True)(Ngram_input)
     
@@ -1211,102 +1155,7 @@ def get_model():
 
 
 batch_size = 1600   #faster for char level embedding model
-epochs = 15
 
+#total average roc_auc: 0.9888378030202132
 
-
-#K_fold=10
-
-accumulator=[]
-from sklearn.metrics import roc_auc_score
-
-accumulator=[]
-for i in range(splits):
-    print("=================================")
-    print("Start on: "+str(i)+" fold")
-    c_train_X = X_tr[train.id.isin(train_ids[i])]
-    c_train_X_2 = X_tr_2[train.id.isin(train_ids[i])]
-    c_train_y = y_tr[train.id.isin(train_ids[i])]
-    c_val_X = X_tr[train.id.isin(val_ids[i])]
-    c_val_X_2 = X_tr_2[train.id.isin(val_ids[i])]
-    c_val_y = y_tr[train.id.isin(val_ids[i])]
-   
-    
-        
-    
-    file_path="weights_base_5_fold_2.hdf5"
-    checkpoint = ModelCheckpoint(file_path, monitor='val_loss', verbose=1, save_best_only=True, mode='min')
-    early = EarlyStopping(monitor="val_loss", mode="min",verbose=1, patience=5)
-    callbacks_list = [early,checkpoint]
-    model = get_model()
-    seed(1)
-    history=model.fit({'main_input':c_train_X, 'aux_input': c_train_X_2},c_train_y, batch_size=batch_size, epochs=epochs, 
-                      validation_data=({'main_input':c_val_X, 'aux_input': c_val_X_2}, c_val_y),callbacks=callbacks_list)
-    
-    import matplotlib
-    matplotlib.use('Agg')
-    import matplotlib.pyplot as plt
-
-
-  
-     ##code validation for NN model
-    print(history.history.keys())
-    plt.clf()
-    plt.plot(history.history['loss'])
-    plt.plot(history.history['val_loss'])
-    plt.title('model accuracy')
-    plt.ylabel('loss')
-    plt.xlabel('epoch')
-    plt.legend(['train', 'val'], loc='upper left')
-    plt.show()
-
-    plt.savefig('k-fold-plot1'+str(i)+'.png', format='png')
-
- 
-    print(history.history.keys())
-    plt.clf()
-    plt.plot(history.history['acc'])
-    plt.plot(history.history['val_acc'])
-    plt.title('model accuracy')
-    plt.ylabel('acc')
-    plt.xlabel('epoch')
-    plt.legend(['train', 'val'], loc='upper left')
-    plt.show()
-
-    plt.savefig('k-fold-plot2'+str(i)+'.png', format='png')
-    
-    model.load_weights(file_path)
-    pred_val = model.predict({'main_input':c_val_X, 'aux_input': c_val_X_2},batch_size=batch_size, verbose=1)
-    y_test = model.predict( {'main_input':X_te_1, 'aux_input': X_te_2},batch_size=batch_size, verbose=1)
-    if X_te_1.shape[0]!=test.shape[0]:
-         break
-   
-    if(i==0):
-         pred_val_accumulator=pred_val
-         test_accumulator=y_test
-    else:
-         #pred_accumulator is not None:
-         pred_val_accumulator=np.vstack((pred_val_accumulator,pred_val))
-         #test_accumulator is not None:
-         test_accumulator=test_accumulator+y_test
-         print("add the test test_accumulator")
-    sub_accumulator=[]
-    for j in range(0,len(list_classes)):
-        result=pred_val[:,j].reshape(-1, 1)
-        roc_score=roc_auc_score(c_val_y[:,j].reshape(-1, 1),result)
-        print("#Column: "+str(j)+" Roc_auc_score: "+str(roc_score))
-        sub_accumulator.append(roc_score)
-    print("#Average Roc_auc_score is: {}\n".format( np.mean(sub_accumulator) ))
-    pickle.dump(pred_val_accumulator,open("prediction_GRU_no_char"+str(i)+".pkl", "wb"))
-    pickle.dump(test_accumulator,open("test_average__GRU_no_char"+str(i)+".pkl", "wb"))
-    accumulator.append(np.mean(sub_accumulator))
-    del model
-test_average=test_accumulator/K_fold
-
-print("#Total average Roc_auc_score is: {}\n".format( np.mean(accumulator) ))    
-
-
-pickle.dump(pred_val_accumulator,open("prediction_GRU.pkl", "wb"))
-if test_accumulator is not None:
-   pickle.dump(test_average,open("test_average_GRU.pkl", "wb"))
 
