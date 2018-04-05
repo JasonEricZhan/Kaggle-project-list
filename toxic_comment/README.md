@@ -80,7 +80,7 @@
 |zu|3|
 
 
-## multi language in the test set
+## multi language in the testing set
 
 |language|occurance|
 |--------|---------|
