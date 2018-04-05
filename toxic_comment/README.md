@@ -1,6 +1,6 @@
 # Run on machine:
 
-GPU is GTx 1080 8GB or Tesla 11GB (independently not paralleled) , 4 core cpu, ram at least 32 GB (only for wiki.en.bin word embedding loading process)
+GPU is GTx 1080 8GB or Tesla 11GB (independently not paralleled) , 4 core cpu, ram at least 32 GB (for loading wiki.en.bin)
 
 
 # Data abstract:
