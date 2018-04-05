@@ -141,7 +141,7 @@ seed(1)
 
 
 
-def get_model(attention=False):
+def bigru_pool_attention(attention=False):
     main_input=Input(shape=(maxlen,),name='main_input')#, name='main_input'
     Ngram_input= Input(shape=(maxlen_char,), name='aux_input')#, name='aux_input'
     embedded_sequences= Embedding(max_features, embed_size,weights=[embedding_matrix],trainable=False)(main_input)
