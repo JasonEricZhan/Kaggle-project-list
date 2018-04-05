@@ -1,4 +1,9 @@
-# Data Abstract:
+# Run on machine:
+
+GTx 1080 8GB or Tesla 11GB
+
+
+# Data abstract:
 ****
 
 ## target label's occurance(toxic):
