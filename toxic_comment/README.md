@@ -3,9 +3,9 @@
 
 
 
-## multi language in the training set and testing set
+ 
 ****
-## train
+## multi language in the training set
 
 |language|occurance|
 |--------|---------|
@@ -81,7 +81,7 @@
 
 ****
 
-## test
+## multi language in the test set
 
 |language|occurance|
 |--------|---------|
