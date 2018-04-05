@@ -1,7 +1,6 @@
 
 
-# language in the training set and testing set
-
+## multi language in the training set and testing set
 ****
 ## train
 
