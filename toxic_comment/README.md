@@ -2,6 +2,9 @@
 
 GPU  GTx 1080 8GB is fine, 4 core cpu, ram at least 32 GB (for loading wiki.en.bin)
 
+# Software enviroment:
+  
+python3, tensorflow 1.4, cuda 6
 
 # Data abstract:
 ****
