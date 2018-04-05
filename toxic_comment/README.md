@@ -5,6 +5,7 @@
 
  
 ****
+
 ## multi language in the training set
 
 |language|occurance|
@@ -78,8 +79,6 @@
 |zh-TW|5|
 |zu|3|
 
-
-****
 
 ## multi language in the test set
 
@@ -183,15 +182,8 @@
 |zh-TW|31|
 |zu|5|
 
-
-
-****
-
-
-
-
-
 ## language tag reference:
 See:https://sites.google.com/site/tomihasa/google-language-codes  
 
+****
 
