@@ -22,9 +22,9 @@ from keras import backend as K
 from nltk.stem import SnowballStemmer
 stemmer = SnowballStemmer('english')
 
-embed_size = 300 # how big is each word vector
-max_features = 160000 # how many unique words to use (i.e num rows in embedding vector)
-
+embed_size = 300 
+max_features = 160000
+maxlen=180
 
 
 train = pd.read_csv('train.csv')
@@ -118,7 +118,7 @@ print('Pad sequences (samples x time)')
 
 
 
-maxlen=180
+
 X_tr = pad_sequences(list_tokenized_train, maxlen=maxlen,padding='post')
 X_te = pad_sequences(list_tokenized_test, maxlen=maxlen,padding='post')
 

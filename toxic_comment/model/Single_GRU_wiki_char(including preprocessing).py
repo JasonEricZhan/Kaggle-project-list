@@ -397,6 +397,7 @@ print(df["comment_text"].isnull().sum())
 
 
 
+<<<<<<< HEAD
 print("....set..indirect..feature")
 
 
@@ -423,6 +424,7 @@ print(df['avg_sent_length'].describe())
 
 
 
+
 #===============char preprocessing================
 
 
@@ -442,8 +444,17 @@ def multiply_columns_char_ngram(data):
 
 
 
+
 corpus_gram=df["comment_text"]
 corpus_gram=parallelize_dataframe(corpus_raw, multiply_columns_char_ngram)
+
+df['count_sent']=df["comment_text"].apply(lambda x: len(re.findall(" ",str(x)))+1)
+df['count_word']=df["comment_text"].apply(lambda x: len(str(x).split()))
+
+df['avg_sent_length']=df['count_word']/df['count_sent']
+print(df['count_sent'].describe())
+print(df['count_word'].describe())
+print(df['avg_sent_length'].describe())
 
 
 
@@ -482,6 +493,7 @@ def char2seq(texts, maxlen):
 
 UNKNOWN_CHAR = 'ⓤ'
 PAD_CHAR = '℗'
+
 
 char2index, index2char = create_char_vocabulary(corpus_gram.values)
 sentences_train=corpus_gram.iloc[:train.shape[0]]
