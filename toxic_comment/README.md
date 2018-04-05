@@ -22,7 +22,7 @@ python3, tensorflow 1.4, cuda 6
  
 ****
 
-## multi language occurance in toxic data (by sentence):
+## multi language occurance in toxic data (by comment):
 
 |language|occurance|
 |--------|---------|
@@ -69,7 +69,7 @@ python3, tensorflow 1.4, cuda 6
 |zh-CN|2|
 
 
-## multi language occurance in the whole training set (by sentence)
+## multi language occurance in the whole training set (by comment)
 
 |language|occurance|
 |--------|---------|
@@ -143,7 +143,7 @@ python3, tensorflow 1.4, cuda 6
 |zu|3|
 
 
-## multi language occurance in the whole testing set (by sentence)
+## multi language occurance in the whole testing set (by comment)
 
 |language|occurance|
 |--------|---------|
