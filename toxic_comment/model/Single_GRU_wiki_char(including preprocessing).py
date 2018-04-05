@@ -719,7 +719,7 @@ def get_model():
     x= Dense(6, activation="sigmoid",kernel_regularizer=regularizers.l2(1e-8))(x)
     
     model = Model(inputs=[main_input,Ngram_input], outputs=x)
-    nadam=Nadam(lr=0.0029, beta_1=0.9, beta_2=0.999, epsilon=None, schedule_decay=0.00325)
+    nadam=Nadam(lr=0.00262, beta_1=0.9, beta_2=0.999, epsilon=None, schedule_decay=0.00325)
     model.compile(loss='binary_crossentropy',
                   optimizer=nadam,
                   metrics=['accuracy',f1_score,auc])
@@ -727,7 +727,7 @@ def get_model():
     return model
 
 
-batch_size = 1600   #faster for char level embedding model
+batch_size = 1280   #faster for char level embedding model
 
 #total average roc_auc: 0.9888378030202132
 
