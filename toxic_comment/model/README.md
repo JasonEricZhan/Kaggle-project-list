@@ -28,5 +28,5 @@ stacking with 7 models(one from teamate John Miller, lgbm lb public score: 0.982
 ensemble step:  
 1.0.5 * DPCNN+ 0.5 * Capsule, and get the new out of fold (new out of fold--no.1)   
 2.0.5 * Single gru+ 0.5 * Wiki.en.bin and char word2vec single gru, and get the new out of fold (new out of fold--no.2)   
-3.stacking 4 out of fold:  
-new out of fold--no.1, new out of fold--no.2, LSTM attention,and lgbm  
+3.stacking 5 out of fold:  
+new out of fold--no.1, new out of fold--no.2, LSTM attention, glove and char single gru, lgbm (from teamate John Miller)
