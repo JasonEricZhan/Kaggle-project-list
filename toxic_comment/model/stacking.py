@@ -137,11 +137,9 @@ for i in range(splits):
     pred_val=np.zeros((len(c_val_X),len(list_classes)))
     y_test=np.zeros((len(test),len(list_classes)))
     for j in range(0,len(list_classes)):
-        #gbm.fit(c_train_X, c_train_y[:,j],eval_set=(c_val_X,c_val_y[:,j]),eval_metric='auc',verbose=True)
         model = runXGB(c_train_X, c_train_y[:,j], c_val_X,c_val_y[:,j])
         pred_val[:,j]=model.predict(xgb.DMatrix(c_val_X))
         y_test[:,j]=model.predict(xgb.DMatrix(X_te))
-        #pred_val[:,j]=gbm.predict(c_val_X)
         result=pred_val[:,j].reshape(-1, 1)
         roc_score=roc_auc_score(c_val_y[:,j].reshape(-1, 1),result)
         print("#Column: "+str(j)+" Roc_auc_score: "+str(roc_score))
