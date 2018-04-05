@@ -25,11 +25,11 @@ import pickle
 
 
 import pickle
-=======================
+#=======================
 
-#........load the out of fold.......
+#........load out of fold.......
 
-=======================
+#=======================
 class_names = list(train)[-6:]
 multarray = np.array([100000, 10000, 1000, 100, 10, 1])
 y_multi = np.sum(train[class_names].values * multarray, axis=1)
@@ -52,11 +52,11 @@ for i, (train_idx, val_idx) in enumerate(skf.split(np.zeros(train.shape[0]), y_m
     
     
     
-=======================
+#=======================
 
 #........hash back.......
 
-=======================
+#=======================
 
 
 #absord high correlated data
