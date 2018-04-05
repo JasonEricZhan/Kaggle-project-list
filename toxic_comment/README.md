@@ -16,7 +16,54 @@
  
 ****
 
-## multi language in the training set (by sentence)
+## multi language occurance in toxic data
+
+|language|occurance|
+|--------|---------|
+|af|1|
+|ar|3|
+|bg|1|
+|bs|1|
+|co|1|
+|cs|1|
+|cy|2|
+|da|4|
+|de|15|
+|el|1|
+|en|16126|
+|eo|1|
+|es|2|
+|fr|3|
+|fy|1|
+|gd|2|
+|haw|3|
+|hi|2|
+|hr|4|
+|hu|2|
+|id|2|
+|is|1|
+|ja|2|
+|la|1|
+|lb|1|
+|mi|1|
+|mt|1|
+|nl|6|
+|no|3|
+|pl|1|
+|pt|2|
+|ro|2|
+|sk|1|
+|so|2|
+|st|1|
+|su|1|
+|sv|2|
+|sw|3|
+|tl|13|
+|tr|1|
+|zh-CN|2|
+
+
+## multi language occurance in the whole training set (by sentence)
 
 |language|occurance|
 |--------|---------|
@@ -90,7 +137,7 @@
 |zu|3|
 
 
-## multi language in the testing set (by sentence)
+## multi language occurance in the whole testing set (by sentence)
 
 |language|occurance|
 |--------|---------|
