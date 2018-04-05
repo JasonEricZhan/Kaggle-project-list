@@ -79,8 +79,6 @@ print(oof_lgbm.shape)
 X_tr=np.hstack((absord,oof_GRU,oof_LSTM,oof_lgbm,absord_GRU))      
 X_te=np.hstack((absord_te,test_ave_GRU,test_ave_LSTM,test_ave_lgbm,absord_GRU_te))       
       
-#oof_GRU    
-#test_ave_GRU
 
 
 
