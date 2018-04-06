@@ -189,23 +189,21 @@ seed(1)
 
 
 
-def get_model():
+def DPCNN(hidden_dim=50,ngram=4,spatialDrop_ratio=0.21,
+          dense_filter=256,,drop_ratio=0.15,last_drop_ratio=0.5):
  
     main_input=Input(shape=(maxlen,))
     embedded_sequences= Embedding(max_features, embed_size,weights=[embedding_matrix],trainable=False)(main_input)
-    embedded_sequences=SpatialDropout1D(0.21)(embedded_sequences)                    
+    embedded_sequences=SpatialDropout1D(spatialDrop_ratio)(embedded_sequences)                    
     
     
   
-    hidden_dim=50  #250
+     #250
 
-    convs = []
-    filters=[3,5]
+    
     #for ngram in filters:
-    ngram=4
     X_shortcut1 = embedded_sequences
 
-    drop_ratio=0.15
     x= Conv1D(filters=hidden_dim,padding='same',kernel_size=ngram)(embedded_sequences)
     x= BatchNormalization()(x)
     x = Dropout(drop_ratio)(x)
@@ -302,10 +300,10 @@ def get_model():
     
     x = GlobalMaxPool1D()(x)
     
-    x = Dense(256, activation='linear')(x)
+    x = Dense(dense_filter, activation='linear')(x)
     x = BatchNormalization()(x)
     x = PReLU()(x)
-    x = Dropout(0.5)(x)
+    x = Dropout(last_drop_ratio)(x)
     
     
     x= Dense(6, activation="sigmoid",kernel_regularizer=regularizers.l2(1e-8))(x)
