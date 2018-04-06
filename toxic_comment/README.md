@@ -1,4 +1,14 @@
 ## Top 5% solution
+
+# Competition abstract:
+
+Discussing things you care about can be difficult. The threat of abuse and harassment online means that many people stop expressing themselves and give up on seeking different opinions. Platforms struggle to effectively facilitate conversations, leading many communities to limit or completely shut down user comments.
+In this competition, you’re challenged to build a multi-headed model that’s capable of detecting different types of of toxicity like threats, obscenity, insults, and identity-based hate 
+
+part from:https://www.kaggle.com/c/jigsaw-toxic-comment-classification-challenge
+
+
+
 # Run on which machine and software enviroment:
 
 GPU  GTx 1080 8GB is fine, 4 core cpu, ram at least 32 GB (for loading wiki.en.bin)
