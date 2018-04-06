@@ -253,7 +253,7 @@ See:https://sites.google.com/site/tomihasa/google-language-codes
 
 *can be the base of which language should be translated  
 *The detection is done by the help of textblob library  
-*Seems de(Germany) is very resonable to be translated
+*Seems de(Germany) is very reasonable to be translated
 
 ****
 
