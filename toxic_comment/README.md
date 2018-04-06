@@ -7,7 +7,7 @@ In this competition, competiters are challenged to build a multi-headed model th
 
 *The Conversation AI team, a research initiative founded by Jigsaw and Google (both a part of Alphabet) are working on the tools to help improve online conversation, the competiton is part of Jigsaw project.
 
-from:https://www.kaggle.com/c/jigsaw-toxic-comment-classification-challenge
+see:https://www.kaggle.com/c/jigsaw-toxic-comment-classification-challenge  to get more detail if needed
 
 
 
