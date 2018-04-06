@@ -685,22 +685,17 @@ seed(1)
 
 
 
-def bigru_pool_model_multi_input():
+def bigru_pool_model_multi_input(hidden_dim_1=136,hidden_dim_2=50):
     main_input=Input(shape=(maxlen,),name='main_input')#, name='main_input'
     Ngram_input= Input(shape=(maxlen_char,), name='aux_input')#, name='aux_input'
     embedded_sequences= Embedding(max_features, embed_size,weights=[embedding_matrix],trainable=False)(main_input)
     embedded_sequences_2= Embedding(weights_char.shape[0], 50,weights=[weights_char],trainable=True)(Ngram_input)
     
     #word level
-    hidden_dim_1=136,hidden_dim_2=50
     x=SpatialDropout1D(0.22)(embedded_sequences)                    #0.1
     x_gru_1 = Bidirectional(CuDNNGRU(hidden_dim_1,recurrent_regularizer=regularizers.l2(1e-6),return_sequences=True))(x)
     
     #char level
-<<<<<<< HEAD
-    hidden_dim=30
-=======
->>>>>>> origin/master
     x_2=SpatialDropout1D(0.21)(embedded_sequences_2)                    #0.1
     x_gru_2 = Bidirectional(CuDNNGRU(hidden_dim_2,recurrent_regularizer=regularizers.l2(1e-8),return_sequences=True))(x_2)
 
