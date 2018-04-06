@@ -280,7 +280,7 @@ user name: in train 157 different user name, in test 81 user name, but overlap o
 
 # Preprocessing:
 
-1.brute force
+1.brute force  
 2.lemmatize:
 * differenciate the word to 4 different type:
   Noun,Verb,Adjective,Adverb
