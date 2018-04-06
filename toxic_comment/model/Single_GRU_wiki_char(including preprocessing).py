@@ -19,8 +19,7 @@ from keras.callbacks import EarlyStopping, ModelCheckpoint
 from keras.layers.core import Layer  
 from keras import initializers, regularizers, constraints  
 from keras import backend as K
-from nltk.stem import SnowballStemmer
-stemmer = SnowballStemmer('english')
+from criteria import *
 
 embed_size = 300 
 max_features = 160000 
@@ -397,7 +396,7 @@ print(df["comment_text"].isnull().sum())
 
 
 
-<<<<<<< HEAD
+
 print("....set..indirect..feature")
 
 

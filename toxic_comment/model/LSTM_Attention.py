@@ -57,6 +57,7 @@ start=time.time()
 
 from commen_preprocess import *
 from glove_twitter_preprocess import *
+from criteria import *
 
 corpus_pre1= parallelize_dataframe(corpus_raw, multiply_columns_clean)
 corpus_twitter= parallelize_dataframe(corpus_pre1, multiply_columns_glove_twitter_preprocess)

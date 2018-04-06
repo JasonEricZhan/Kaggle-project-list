@@ -39,7 +39,7 @@ corpus_raw=df.comment_text
 
 from commen_preprocess import *
 from word_net_lemmatize import *
-
+from criteria import *
 
 
 

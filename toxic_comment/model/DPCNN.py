@@ -56,6 +56,7 @@ start=time.time()
 
 
 from commen_preprocess import *
+from criteria import *
 
 
 corpus_clean= parallelize_dataframe(corpus_raw, multiply_columns_clean)
