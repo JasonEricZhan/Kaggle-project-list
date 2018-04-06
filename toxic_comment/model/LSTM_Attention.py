@@ -168,7 +168,6 @@ print("complete preprocess")
 
 import sys
 from os.path import dirname
-sys.path.append(dirname(dirname(__file__)))
 from keras import initializers
 from keras.engine import InputSpec, Layer
 from keras import backend as K
@@ -255,7 +254,6 @@ def lstm_attention():
     x=SpatialDropout1D(0.21)(embedded_sequences)                    #0.1
     x_lstm_1 = Bidirectional(CuDNNLSTM(hidden_dim,recurrent_regularizer=regularizers.l2(1e-5),return_sequences=True))(x)
     x_lstm_2 = Bidirectional(CuDNNLSTM(hidden_dim,recurrent_regularizer=regularizers.l2(1e-5),return_sequences=True))(x_lstm_1)
-   regularizer=regularizers.l2(1e-8),return_sequences=True))(x_gru_1)
     x_com = concatenate([x_lstm_1,x_lstm_2])
     x_att_1 = AttentionWeightedAverage()(x_com)
     x_att_1= Dropout(0.225)(x_att_1)
