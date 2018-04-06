@@ -232,7 +232,7 @@ class NN():
         x = MaxPool1D(pool_size=4, strides=2, padding='valid')(x)
 
 """   
-    for i in range(2,num_block):
+    for i in range(2,num_block-1):
         X_shortcut = x
 
         x = Conv1D(filters=hidden_dim,padding='same', kernel_size=ngram)(x)
