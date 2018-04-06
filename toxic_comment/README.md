@@ -279,6 +279,6 @@ user name: in train 157 different user name, in test 81 user name, but overlap o
 ****
 
 
-# model details:
+# Model details:
 
 See the file name: model
