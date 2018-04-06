@@ -189,135 +189,156 @@ seed(1)
 
 
 
-def DPCNN(hidden_dim=50,ngram=4,spatialDrop_ratio=0.21,
-          dense_filter=256,,drop_ratio=0.15,last_drop_ratio=0.5):
+class NN():
+   def __init__(self, optimizer="Nadam",lr_ratio=0.001,decay_ratio=0.022,loss='binary_crossentropy'):
+       if optimizer is "Nadam":
+             self.optimizer=Nadam(lr=lr_ratio, beta_1=0.9, beta_2=0.999, epsilon=None, schedule_decay=decay_ratio)
+       if optimizer is "Adam":
+             self.optimizer=Adam(lr=lr_ratio, beta_1=0.9, beta_2=0.999, epsilon=None, decay=decay_ratio, amsgrad=False)
+       self.loss=loss
+
+   def DPCNN(self,hidden_dim=50,ngram=4,spatialDrop_ratio=0.21,
+                dense_filter=256,,drop_ratio=0.15,last_drop_ratio=0.5,num_block=6):
  
-    main_input=Input(shape=(maxlen,))
-    embedded_sequences= Embedding(max_features, embed_size,weights=[embedding_matrix],trainable=False)(main_input)
-    embedded_sequences=SpatialDropout1D(spatialDrop_ratio)(embedded_sequences)                    
+        main_input=Input(shape=(maxlen,))
+        embedded_sequences= Embedding(max_features, embed_size,weights=[embedding_matrix],trainable=False)(main_input)
+        embedded_sequences=SpatialDropout1D(spatialDrop_ratio)(embedded_sequences)                    
     
     
   
-     #250
+    
+        assert num_block > 1
+    
+        X_shortcut1 = embedded_sequences
 
+        x= Conv1D(filters=hidden_dim,padding='same',kernel_size=ngram)(embedded_sequences)
+        x= BatchNormalization()(x)
+        x = Dropout(drop_ratio)(x)
+        x= PReLU()(x)
+        x= Conv1D(filters=hidden_dim,padding='same', kernel_size=ngram)(x)
+        x= BatchNormalization()(x)
+        x = Dropout(drop_ratio)(x)
+        x= PReLU()(x)
+       
     
-    #for ngram in filters:
-    X_shortcut1 = embedded_sequences
+        embedding_reshape=Conv1D(nb_filter=hidden_dim,kernel_size=1,padding='same',activation='linear')(X_shortcut1)
+         # connect shortcut to the main path
+        embedding_reshape = PReLU()(embedding_reshape)  # pre activation
+        x = Add()([embedding_reshape,x])
 
-    x= Conv1D(filters=hidden_dim,padding='same',kernel_size=ngram)(embedded_sequences)
-    x= BatchNormalization()(x)
-    x = Dropout(drop_ratio)(x)
-    x= PReLU()(x)
-    x= Conv1D(filters=hidden_dim,padding='same', kernel_size=ngram)(x)
-    x= BatchNormalization()(x)
-    x = Dropout(drop_ratio)(x)
-    x= PReLU()(x)
-    
-    
-    embedding_reshape=Conv1D(nb_filter=hidden_dim,kernel_size=1,padding='same',activation='linear')(X_shortcut1)
-     # connect shortcut to the main path
-    embedding_reshape = PReLU()(embedding_reshape)  # pre activation
-    x = Add()([embedding_reshape,x])
+        x = MaxPool1D(pool_size=4, strides=2, padding='valid')(x)
 
-    x = MaxPool1D(pool_size=4, strides=2, padding='valid')(x)
+"""   
+    for i in range(2,num_block):
+        X_shortcut = x
 
-   
-    
-    X_shortcut2 = x
+        x = Conv1D(filters=hidden_dim,padding='same', kernel_size=ngram)(x)
+        x= BatchNormalization()(x)
+        x = Dropout(drop_ratio)(x)
+        x = PReLU()(x)
+        x = Conv1D(filters=hidden_dim,padding='same', kernel_size=ngram)(x)
+        x= BatchNormalization()(x)
+        x = Dropout(drop_ratio)(x)
+        x = PReLU()(x)
 
-    x = Conv1D(filters=hidden_dim,padding='same', kernel_size=ngram)(x)
-    x= BatchNormalization()(x)
-    x = Dropout(drop_ratio)(x)
-    x = PReLU()(x)
-    x = Conv1D(filters=hidden_dim,padding='same', kernel_size=ngram)(x)
-    x= BatchNormalization()(x)
-    x = Dropout(drop_ratio)(x)
-    x = PReLU()(x)
+        x = Add()([X_shortcut,x])
+        x = MaxPool1D(pool_size=4,strides=2, padding='valid')(x)
+"""
+        X_shortcut2 = x
 
-    x = Add()([X_shortcut2,x])
+        x = Conv1D(filters=hidden_dim,padding='same', kernel_size=ngram)(x)
+        x= BatchNormalization()(x)
+        x = Dropout(drop_ratio)(x)
+        x = PReLU()(x)
+        x = Conv1D(filters=hidden_dim,padding='same', kernel_size=ngram)(x)
+        x= BatchNormalization()(x)
+        x = Dropout(drop_ratio)(x)
+        x = PReLU()(x)
 
-    x = MaxPool1D(pool_size=4,strides=2, padding='valid')(x)
+        x = Add()([X_shortcut2,x])
+
+        x = MaxPool1D(pool_size=4,strides=2, padding='valid')(x)
     
-    X_shortcut3 = x
+        X_shortcut3 = x
     
-    x = Conv1D(filters=hidden_dim,padding='same', kernel_size=ngram)(x)
-    x= BatchNormalization()(x)
-    x = Dropout(drop_ratio)(x)
-    x = PReLU()(x)
-    x = Conv1D(filters=hidden_dim,padding='same', kernel_size=ngram)(x)
-    x= BatchNormalization()(x)
-    x = Dropout(drop_ratio)(x)
-    x = PReLU()(x)
-    
-    
-    x = Add()([X_shortcut3,x])
-    
-    x = MaxPool1D(pool_size=4,strides=2, padding='valid')(x)
+        x = Conv1D(filters=hidden_dim,padding='same', kernel_size=ngram)(x)
+        x= BatchNormalization()(x)
+        x = Dropout(drop_ratio)(x)
+        x = PReLU()(x)
+        x = Conv1D(filters=hidden_dim,padding='same', kernel_size=ngram)(x)
+        x= BatchNormalization()(x)
+        x = Dropout(drop_ratio)(x)
+        x = PReLU()(x)
     
     
-    X_shortcut4 = x
+        x = Add()([X_shortcut3,x])
     
-    x = Conv1D(filters=hidden_dim,padding='same', kernel_size=ngram)(x)
-    x= BatchNormalization()(x)
-    x = Dropout(drop_ratio)(x)
-    x = PReLU()(x)
-    x = Conv1D(filters=hidden_dim,padding='same', kernel_size=ngram)(x)
-    x= BatchNormalization()(x)
-    x = Dropout(drop_ratio)(x)
-    x = PReLU()(x)
+        x = MaxPool1D(pool_size=4,strides=2, padding='valid')(x)
     
-    x = Add()([X_shortcut4,x])
     
-    x = MaxPool1D(pool_size=4,strides=2, padding='valid')(x)
+        X_shortcut4 = x
+    
+        x = Conv1D(filters=hidden_dim,padding='same', kernel_size=ngram)(x)
+        x= BatchNormalization()(x)
+        x = Dropout(drop_ratio)(x)
+        x = PReLU()(x)
+        x = Conv1D(filters=hidden_dim,padding='same', kernel_size=ngram)(x)
+        x= BatchNormalization()(x)
+        x = Dropout(drop_ratio)(x)
+        x = PReLU()(x)
+    
+        x = Add()([X_shortcut4,x])
+    
+        x = MaxPool1D(pool_size=4,strides=2, padding='valid')(x)
         
-    X_shortcut5 = x
+        X_shortcut5 = x
     
-    x = Conv1D(filters=hidden_dim,padding='same', kernel_size=ngram)(x)
-    x= BatchNormalization()(x)
-    x = Dropout(drop_ratio)(x)
-    x = PReLU()(x)
-    x = Conv1D(filters=hidden_dim,padding='same', kernel_size=ngram)(x)
-    x= BatchNormalization()(x)
-    x = Dropout(drop_ratio)(x)
-    x = PReLU()(x) 
+        x = Conv1D(filters=hidden_dim,padding='same', kernel_size=ngram)(x)
+        x= BatchNormalization()(x)
+        x = Dropout(drop_ratio)(x)
+        x = PReLU()(x)
+        x = Conv1D(filters=hidden_dim,padding='same', kernel_size=ngram)(x)
+        x= BatchNormalization()(x)
+        x = Dropout(drop_ratio)(x)
+        x = PReLU()(x) 
     
-    x = Add()([X_shortcut5,x])
+        x = Add()([X_shortcut5,x])
     
-    x = MaxPool1D(pool_size=4,strides=2, padding='valid')(x)
+        x = MaxPool1D(pool_size=4,strides=2, padding='valid')(x)
     
-    X_shortcut6 = x
+        X_shortcut6 = x
     
-    x = Conv1D(filters=hidden_dim,padding='same', kernel_size=ngram)(x)
-    x= BatchNormalization()(x)
-    x = Dropout(drop_ratio)(x)
-    x = PReLU()(x)
-    x = Conv1D(filters=hidden_dim,padding='same', kernel_size=ngram)(x)
-    x= BatchNormalization()(x)
-    x = Dropout(drop_ratio)(x)
-    x = PReLU()(x) 
+        x = Conv1D(filters=hidden_dim,padding='same', kernel_size=ngram)(x)
+        x= BatchNormalization()(x)
+        x = Dropout(drop_ratio)(x)
+        x = PReLU()(x)
+        x = Conv1D(filters=hidden_dim,padding='same', kernel_size=ngram)(x)
+        x= BatchNormalization()(x)
+        x = Dropout(drop_ratio)(x)
+        x = PReLU()(x) 
     
-    x = Add()([X_shortcut6,x])
+        x = Add()([X_shortcut6,x])
     
-    x = GlobalMaxPool1D()(x)
+        x = GlobalMaxPool1D()(x)
     
-    x = Dense(dense_filter, activation='linear')(x)
-    x = BatchNormalization()(x)
-    x = PReLU()(x)
-    x = Dropout(last_drop_ratio)(x)
+        x = Dense(dense_filter, activation='linear')(x)
+        x = BatchNormalization()(x)
+        x = PReLU()(x)
+        x = Dropout(last_drop_ratio)(x)
     
     
-    x= Dense(6, activation="sigmoid",kernel_regularizer=regularizers.l2(1e-8))(x)
+        x= Dense(6, activation="sigmoid",kernel_regularizer=regularizers.l2(1e-8))(x)
 
     
     
-    model = Model(inputs=main_input, outputs=x)
+        model = Model(inputs=main_input, outputs=x)
     
-    nadam=Nadam(lr=0.001, beta_1=0.9, beta_2=0.999, epsilon=None, schedule_decay=0.0022)
-    model.compile(loss='binary_crossentropy',
-                  optimizer=nadam,
-                  metrics=['accuracy',f1_score,auc])
-    print(model.summary())
-    return model
+        #nadam=Nadam(lr=0.001, beta_1=0.9, beta_2=0.999, epsilon=None, schedule_decay=0.0022)
+        model.compile(loss=self.loss,
+                      optimizer=self.optimizer,
+                      metrics=['accuracy',f1_score,auc])
+        print(model.summary())
+        return model
 
 
 batch_size = 400
