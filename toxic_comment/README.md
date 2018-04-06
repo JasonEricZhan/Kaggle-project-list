@@ -3,9 +3,9 @@
 # Competition abstract:
 
 Discussing things you care about can be difficult. The threat of abuse and harassment online means that many people stop expressing themselves and give up on seeking different opinions. Platforms struggle to effectively facilitate conversations, leading many communities to limit or completely shut down user comments.
-In this competition, you’re challenged to build a multi-headed model that’s capable of detecting different types of of toxicity like threats, obscenity, insults, and identity-based hate 
+In this competition, competiters are challenged to build a multi-headed model that’s capable of detecting different types of of toxicity like threats, obscenity, insults, and identity-based hate 
 
-The Conversation AI team, a research initiative founded by Jigsaw and Google (both a part of Alphabet) are working on the tools to help improve online conversation.
+*The Conversation AI team, a research initiative founded by Jigsaw and Google (both a part of Alphabet) are working on the tools to help improve online conversation, the competiton is part of Jigsaw project.
 
 from:https://www.kaggle.com/c/jigsaw-toxic-comment-classification-challenge
 
