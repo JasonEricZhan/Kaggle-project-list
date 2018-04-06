@@ -189,6 +189,8 @@ seed(1)
 
 
 
+#default parameter are represented by my own setting of model parameter
+
 class NN():
    def __init__(self, optimizer="Nadam",lr_ratio=0.001,decay_ratio=0.022,loss='binary_crossentropy'):
        if optimizer is "Nadam":
