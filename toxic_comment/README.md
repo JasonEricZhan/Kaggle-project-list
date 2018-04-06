@@ -7,7 +7,7 @@ In this competition, competiters are challenged to build a multi-headed model th
 
 *The Conversation AI team, a research initiative founded by Jigsaw and Google (both a part of Alphabet) are working on the tools to help improve online conversation, the competiton is part of Jigsaw project.
 
-see:https://www.kaggle.com/c/jigsaw-toxic-comment-classification-challenge  to get more detail if needed
+Please see:https://www.kaggle.com/c/jigsaw-toxic-comment-classification-challenge  to get more detail if needed
 
 
 
@@ -261,7 +261,7 @@ python3, tensorflow 1.4, cuda 6
 |zu|5|
 
 ## language tag reference:
-See:https://sites.google.com/site/tomihasa/google-language-codes  
+Please see:https://sites.google.com/site/tomihasa/google-language-codes  
 
 *can be the base of which language should be translated  
 *The detection is done by the help of textblob library, the comment that less than 3 words will be unable to be detected  
@@ -281,4 +281,4 @@ user name: in train 157 different user name, in test 81 user name, but overlap o
 
 # Model details:
 
-See the file name: model
+Please see the file name: model
