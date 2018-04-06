@@ -284,10 +284,10 @@ user name: in train 157 different user name, in test 81 user name, but overlap o
 2.lemmatize:
 * differenciate the word to 4 different type:
   Noun,Verb,Adjective,Adverb
-* get the common form of them, for example:
+* get the common form of them, for example:  
   he hates-->he hate,  
-  Apples-->Apple,
-  happier-->happy,
+  Apples-->Apple,  
+  happier-->happy,  
   he was walking slowly-->he be walk slow
 
 # Model details:
