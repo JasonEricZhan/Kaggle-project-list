@@ -223,8 +223,11 @@ def DPCNN(num_block=6,ngram=4,drop_ratio=0.15,last_drop_ratio=0.5):
 
     x = MaxPool1D(pool_size=4, strides=2, padding='valid')(x)
 
+
   
     for i in range(2,num_block):
+   
+    for i in range(2,num_block-1):
         X_shortcut = x
 
         x = Conv1D(filters=hidden_dim,padding='same', kernel_size=ngram)(x)
