@@ -13,6 +13,6 @@ Or please download writting report from: https://drive.google.com/drive/folders/
 #### Holder: Jigsaw (part of Alphabet and it works with Google AI conversation team)
 https://www.kaggle.com/c/jigsaw-toxic-comment-classification-challenge</br>
 
-#### File name:toxic_comment; Including writting report 
+#### File name:toxic_comment; Including writting report toxic_comment_writting_report.pdf
 
-Or please download writting report from:  
+Or please download writting report from: https://drive.google.com/drive/folders/1rtRz4IRec-6NAfTHGua1As5q4PIpZScq
