@@ -1,5 +1,5 @@
 
-#this script is to hash the out of fold to orignial data order
+#this script is to hash the out of fold back to orignial data's order
 
 import pickle
 import pandas as pd
