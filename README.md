@@ -5,7 +5,8 @@
 ### 1.NTUST Machine Learning Class final project:
 #### Taxi travel time prediction:
 https://www.kaggle.com/c/pkdd-15-taxi-trip-time-prediction-ii</br>
-#### File name:taxii ; Including writting report NTUST_MLclass_final.pdf  (on github, pdf link will not work)
+#### File name:taxii ; Including writting report NTUST_MLclass_final.pdf    
+(on github, pdf link will not work, it needs to be downloaded)
 
 Or please download writting report from: https://drive.google.com/drive/folders/1rtRz4IRec-6NAfTHGua1As5q4PIpZScq
 
@@ -14,6 +15,7 @@ Or please download writting report from: https://drive.google.com/drive/folders/
 #### Holder: Jigsaw (part of Alphabet and it works with Google AI conversation team)
 https://www.kaggle.com/c/jigsaw-toxic-comment-classification-challenge</br>
 
-#### File name:toxic_comment; Including writting report toxic_comment_writting_report.pdf (on github, pdf link will not work)
+#### File name:toxic_comment; Including writting report toxic_comment_writting_report.pdf  
+(on github, pdf link will not work, it needs to be downloaded)
 
 Or please download writting report from: https://drive.google.com/drive/folders/1rtRz4IRec-6NAfTHGua1As5q4PIpZScq
