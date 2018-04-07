@@ -60,22 +60,10 @@ def P(word):    #part from CPMP
 
 #Assume not using glove.840B.300d=======================================
 #origin, suitable for any others, like fastext wiki, but recommend not use like this
-import os, re, csv, math, codecs
-print('loading word embeddings...')
-embeddings_index = {}
-f = codecs.open('...', encoding='utf-8')
-
-from tqdm import tqdm
-for line in tqdm(f):
-    values = line.rstrip().rsplit(' ')
-    word = values[0]
-    coefs = np.asarray(values[1:], dtype='float32')
-    embeddings_index[word] = coefs
-f.close()
-print('found %s word vectors' % len(embeddings_index))
-
-WORDS=embeddings_index
-
+ 
+#===========    
+#load data....    
+#===========  
 
 sum_of_words=len(WORDS)
 def P(word, N=sum_of_words): 
