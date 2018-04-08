@@ -1,5 +1,6 @@
 ## Top 5% solution
-### Detailed writting report file name: toxic_comment_writting_report.pdf
+### Detailed writting report file name: toxic_comment_writting_report.pdf  
+Or please download writting report from: https://drive.google.com/drive/folders/1rtRz4IRec-6NAfTHGua1As5q4PIpZScq  
 
 # Competition abstract:
 
