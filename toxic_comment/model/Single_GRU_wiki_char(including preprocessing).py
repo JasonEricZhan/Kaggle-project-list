@@ -442,7 +442,7 @@ def multiply_columns_char_ngram(data):
 
 
 
-
+#using same data as word embedding or the performance may be worse!?
 
 
 corpus_gram=df["comment_text"]
