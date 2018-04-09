@@ -1,4 +1,5 @@
 # This Python 3 environment comes with many helpful analytics libraries installed
+#Should have the same package as kernel
 
 
 
