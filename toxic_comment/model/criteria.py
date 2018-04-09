@@ -42,7 +42,8 @@ def binary_PFA(y_true, y_pred, threshold=K.variable(value=0.5)):
 #-----------------------------------------------------------------------------------------------------------------------------------------------------
 # P_TA prob true alerts for binary classifier
 """
-The threshold here is simplify to 0.5, but in reality the threshold will moving, just for checking by very intuitive way
+The threshold here is simplify to 0.5, but in reality the threshold will moving, 
+and here just for checking by very intuitive way,
 so finally it "has" to be checked by sklearn package!!
 """
 def binary_PTA(y_true, y_pred, threshold=K.variable(value=0.5)):
