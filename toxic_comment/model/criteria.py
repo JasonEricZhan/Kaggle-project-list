@@ -41,7 +41,7 @@ def binary_PFA(y_true, y_pred, threshold=K.variable(value=0.5)):
     return FP/N
 #-----------------------------------------------------------------------------------------------------------------------------------------------------
 # P_TA prob true alerts for binary classifier
-# The threshold here is simplify to 0.5
+# The threshold here is simplify to 0.5, but finally it has to be checked by sklearn package
 def binary_PTA(y_true, y_pred, threshold=K.variable(value=0.5)):
     y_pred = K.cast(y_pred >= threshold, 'float32')
     # P = total number of positive labels
