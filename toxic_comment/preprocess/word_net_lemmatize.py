@@ -15,6 +15,8 @@ def get_wordnet_pos(treebank_tag):
     else:
         return None
 
+    
+ #if you want to know what the tag means, please see there https://www.ling.upenn.edu/courses/Fall_2003/ling001/penn_treebank_pos.html   
 
 def lemmatize_sentence(sentence):
     res = []
