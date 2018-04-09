@@ -282,7 +282,7 @@ user name: in train 157 different user name, in test 81 user name, but overlap o
 
 # Preprocessing:
 
-1.brute force  
+1.brute force(including tokenize some specific punctuation)
 2.lemmatize:
 * differenciate the word to 4 different type:
   Noun,Verb,Adjective,Adverb
@@ -290,7 +290,7 @@ user name: in train 157 different user name, in test 81 user name, but overlap o
   he hates-->he hate,  
   Apples-->Apple,  
   happier-->happy,  
-  he was walking slowly-->he be walk slow
+  he was walking slowly-->he be walk slowly
 
 # Model details:
 
