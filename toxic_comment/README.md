@@ -277,6 +277,7 @@ ips: in train 5804 different ips, in test 842 ips, but overlap only 41 ips
 
 user name: in train 157 different user name, in test 81 user name, but overlap only 1 user name
 
+reference from: https://www.kaggle.com/jagangupta/stop-the-s-toxic-comments-eda , it is a very good EDA!!
 
 ****
 
