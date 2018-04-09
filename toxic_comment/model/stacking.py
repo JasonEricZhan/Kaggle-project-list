@@ -19,7 +19,7 @@ list_classes = ["toxic", "severe_toxic", "obscene", "threat", "insult", "identit
 y= train[list_classes].values      
 
 
-import pickle
+
 
 
 
