@@ -444,8 +444,9 @@ def multiply_columns_char_ngram(data):
 
 
 
+
 corpus_gram=df["comment_text"]
-corpus_gram=parallelize_dataframe(corpus_raw, multiply_columns_char_ngram)
+corpus_gram=parallelize_dataframe(corpus, multiply_columns_char_ngram)
 
 df['count_sent']=df["comment_text"].apply(lambda x: len(re.findall(" ",str(x)))+1)
 df['count_word']=df["comment_text"].apply(lambda x: len(str(x).split()))
@@ -522,6 +523,9 @@ X_te_2 = char2seq(sentences_test,maxlen_char)
 train["comment_text"]=train_cl["comment_text"].iloc[:train.shape[0]]
 
 char_toxic=train.loc[train["clean"]==0,"char"]
+
+
+#===========char embedding training================
 
 from gensim.models import Word2Vec
     
