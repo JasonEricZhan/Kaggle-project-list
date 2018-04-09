@@ -648,6 +648,8 @@ print('x_train_2 new shape:', X_tr_2.shape)
 print('x_test_2 new shape:', X_te_2.shape)
 
 
+#=========start to load word embedding===========
+
 
 from gensim.models.wrappers import FastText
 
