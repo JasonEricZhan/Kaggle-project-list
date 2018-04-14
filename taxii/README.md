@@ -40,7 +40,8 @@ Feature choosing:
 3. Using correlation plot to choose which features about “time” to use. Since the features about time is made from TIMESTAMP. Through the process is easily to get the collinearity effect(Sometime will make model overfitting, or bad performance). Thus, I get rid of highly correlated data, like month, TIMESTAMP, and day_of_year.
 
 ## Data choosing:
-1. Choosing the data that its “MISSING_DATA" is false 2. Choosing the data that have start point and end point.
+1. Choosing the data that its “MISSING_DATA" is false.  
+2. Choosing the data that have start point and end point.
 Target value choosing:
 *Choose POLYLINE_time_second_log for training model, after model
 training, I’ll take exponential value to transfer back for comparison with POLYLINE_time_second.
