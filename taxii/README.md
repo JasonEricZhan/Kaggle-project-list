@@ -28,7 +28,7 @@ About target value(travel time):
 1. See how many points traverse in a trip, compute sum of them and minus one, after that multiply 15 seconds( just as the statement on kaggle). The data which does not have any point in the trip get zero.
 Target value: POLYLINE_time_second.
 2. Another Target value: POLYLINE_time_second_log, Because the distribution of above value is very skewed, so I get the log of them, and the result is like normal distribution, it’s really good! ! The data which does not have any point in the trip get zero.
-
+3. Compute the travel path pass the "hot point" or not
 
 
 ### About other features:
