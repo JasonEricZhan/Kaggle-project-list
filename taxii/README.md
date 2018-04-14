@@ -3,7 +3,7 @@ Taxi travel time prediction:
 https://www.kaggle.com/c/pkdd-15-taxi-trip-time-prediction-ii
 
 ***
-# Complete Data flow and NN model training
+# Complete Data handling
 ## Data preprocessing:
 ### About IDs:
 1. label encode the TAXI ID, to let the number will be the smaller and shorter bit, so it will be easier for training and save the training time.
