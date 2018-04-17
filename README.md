@@ -15,6 +15,8 @@ Or please download writting report from: https://drive.google.com/drive/folders/
 #### Holder: Jigsaw (part of Alphabet and it works with Google AI conversation team)
 https://www.kaggle.com/c/jigsaw-toxic-comment-classification-challenge</br>
 
+![image](toxic_rank_pic.png)
+
 #### File name:toxic_comment; Including writting report toxic_comment_writting_report.pdf  
 (on github, pdf link will not work, it needs to be downloaded)
 
