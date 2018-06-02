@@ -9,7 +9,7 @@ Glove:
 
 
 ## lb score(mean columnwise AUC):
-#### wiki.en.bin single gru:                               
+#### wiki.en.bin single gru (late submit):                               
 public:0.9860,   private:0.9847  
 #### wiki.en.bin and char word2vec single gru:             
 public:0.9859,   private:0.9846  
