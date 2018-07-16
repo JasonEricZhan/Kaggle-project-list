@@ -53,4 +53,6 @@ Detailed writting report : NTUST_MLclass_final.pdf
 
 (on github, pdf link will not work, it needs to be downloaded)
 
+** WARNING: IF YOU EXPAND THE TIME WINDOE, I WOULD NOT RECOMMAND YOU TO USE Bi-directional RNN, IT VIOLATE THE INTUITION!!
+
 Or please download writting report from: https://drive.google.com/drive/folders/1rtRz4IRec-6NAfTHGua1As5q4PIpZScq
