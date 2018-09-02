@@ -88,7 +88,6 @@ def runXGB(train_X, train_y, test_X, test_y=None, feature_names=None, seed_val=2
     param['objective'] = 'binary:logistic'
     param['eta'] = 0.11 #0.12
     param['max_depth'] = 3  #4
-    param['n_estimators']= 1200  #800
     param['silent'] = 1
     #param['max_leaf_nodes'] = 2000
     param['eval_metric'] = 'logloss'
