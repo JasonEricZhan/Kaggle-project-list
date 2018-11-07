@@ -19,7 +19,8 @@ from keras import initializers, regularizers, constraints
 from keras import backend as K
 from criteria import *
 
-embed_size = 300 
+word_embed_size = 300 
+char_embed_size=50
 max_features = 160000 
 maxlen=180
 
@@ -528,7 +529,7 @@ char_toxic=train.loc[train["clean"]==0,"char"]
 
 #===========char embedding training and get the embedding matrix================
 
-char_embed_size=50
+
 nb_char=len(char2index)
 
 
@@ -686,7 +687,7 @@ model = FastText.load_fasttext_format('wiki.en')
 
 nb_words= min(max_features, len(tokenizer.word_index))
 
-word_embedding_matrix = np.zeros((nb_words, embed_size))
+word_embedding_matrix = np.zeros((nb_words, word_embed_size))
 for word, i in tokenizer.word_index.items():
     if i >= nb_words:
         continue
@@ -717,8 +718,8 @@ seed(1)
 def bigru_pool_model_multi_input(hidden_dim_1=136,hidden_dim_2=50):
     main_input=Input(shape=(maxlen,),name='main_input')#, name='main_input'
     Ngram_input= Input(shape=(maxlen_char,), name='aux_input')#, name='aux_input'
-    embedded_sequences= Embedding(max_features, embed_size,weights=[word_embedding_matrix],trainable=False)(main_input)
-    embedded_sequences_2= Embedding(weights_char.shape[0], 50,weights=[char_embedding_matrix],trainable=True)(Ngram_input)
+    embedded_sequences= Embedding(max_features, word_embed_size,weights=[word_embedding_matrix],trainable=False)(main_input)
+    embedded_sequences_2= Embedding(nb_char, char_embed_size,weights=[char_embedding_matrix],trainable=True)(Ngram_input)
     
     #word level
     x=SpatialDropout1D(0.22)(embedded_sequences)                    #0.1
