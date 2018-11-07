@@ -563,7 +563,7 @@ for word in char2index:
     idx=char2index[word]
     if word in model.wv:
         char_embedding_matrix[idx] = model[word]
-print('Null word embeddings: %d' % np.sum(np.sum(char_embedding_matrix, axis=1) == 0))
+print('Null char embeddings: %d' % np.sum(np.sum(char_embedding_matrix, axis=1) == 0))
 
 
 
