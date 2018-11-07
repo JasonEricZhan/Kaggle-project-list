@@ -530,7 +530,7 @@ char_toxic=train.loc[train["clean"]==0,"char"]
 #===========char embedding training and get the embedding matrix================
 
 
-nb_char=len(char2index)
+
 
 
 list_container=[]
@@ -557,7 +557,7 @@ np.save(open("self_train_weight_toxic.npz", 'wb'), weights_char)
 #weights_char=np.load(open("self_train_weight_toxic.npz", 'rb'))
 
 
-
+nb_char=len(char2index)
 char_embedding_matrix = np.zeros((nb_char, char_embed_size))
 for word in char2index:
     idx=char2index[word]
