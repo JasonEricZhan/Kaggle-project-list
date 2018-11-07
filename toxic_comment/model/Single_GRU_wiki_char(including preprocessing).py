@@ -427,10 +427,9 @@ print(df['avg_sent_length'].describe())
 
 
 def char_ngram(word,ngram=2):
-    char_ngram_list=[word[i:i+ngram] for i in range(len(word)-ngram+1)]
-    char_ngram_sent=" ".join(char_ngram_list)
+    char_ngram_list=[word.decode('utf-8')[i:i+ngram] for i in range(len(word)-ngram+1)]
+    char_ngram_sent=u"-:-".join(char_ngram_list)
     return char_ngram_sent
-
 
 
 
@@ -460,21 +459,30 @@ print(df['avg_sent_length'].describe())
 from collections import Counter
 
 # part from Dieter
-def create_char_vocabulary(texts_arr,min_count_chars=50):
+def create_char_vocabulary_ngram(texts_arr,ngram=3,min_count_chars=50):
     idx=0
     for article in texts_arr:
         texts_arr[idx]=article.lower()
         idx+=1
-    counter = Counter()
+    char_dict = {}
     for k, text in enumerate(texts_arr):
-        counter.update(text)
-
-    raw_counts = list(counter.items())
-    print('%s characters found' %len(counter))
-    print('keepin characters with count > %s' % min_count_chars)
-    vocab = [char_tuple[0] for char_tuple in raw_counts if char_tuple[1] > min_count_chars]
+        ngram_text=char_ngram(text,ngram=3)
+        list_char=ngram_text.split("-:-")
+        for char in list_char:
+            if char not in char_dict:
+               char_dict[char]=1
+            else:
+               char_dict[char]=char_dict[char]+1
+    raw_counts_char = list(char_dict)
+    #print(raw_counts)
+    print("{}-gram".format(ngram))
+    print('%s characters found' %len(raw_counts_char))
+    print('keepin characters with count >= %s' % min_count_chars)
+    vocab = [ char for char in raw_counts_char if char_dict[char] >= min_count_chars]
     char2index = {char:(ind+1) for ind, char in enumerate(vocab)}
-    char2index[UNKNOWN_CHAR] = 0
+    for token in UNKNOWN_CHAR:
+        char2index[token] = 0
+        print(token)
     char2index[PAD_CHAR] = -1
     index2char = {ind:char for char, ind in char2index.items()}
     print('%s remaining characters' % len(char2index))
@@ -533,20 +541,24 @@ char_toxic=train.loc[train["clean"]==0,"char"]
 #===========char embedding training and get the embedding matrix================
 
 
-
+char2index, index2char = create_char_vocabulary(corpus_gram.values(),min_count_chars=20)
 
 
 list_container=[]
-for article in container:
-    char_ngram_article=char_ngram(article,ngram=2)
+for article in char_toxic.values():
+    char_ngram_article=char_ngram(article,ngram=3)
     list_container.append(char_ngram_article)
-char2index, index2char = create_char_vocabulary(list_container,min_count_chars=20)
+    
+  
+count=0
+for article in list_container:
+    list_container[count]=article.split("-:-")
+    count+=1
 
 
 from gensim.models import Word2Vec
 
-article_in=' '.join(list_container)
-model= Word2Vec(sentences=article_in, size=char_embed_size, window=100, min_count=20, workers=2000, sg=0)
+model= Word2Vec(sentences=list_container, size=char_embed_size, window=100, min_count=20, workers=2000, sg=0)
 
 
 model.save('mymodel_toxic')
