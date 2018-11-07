@@ -459,9 +459,13 @@ print(df['avg_sent_length'].describe())
 from collections import Counter
 
 # part from Dieter
-def create_char_vocabulary(texts,min_count_chars=50):
+def create_char_vocabulary(texts_arr,min_count_chars=50):
+    idx=0
+    for article in texts_arr:
+        texts_arr[idx]=article.lower()
+        idx+=1
     counter = Counter()
-    for k, text in enumerate(texts):
+    for k, text in enumerate(texts_arr):
         counter.update(text)
 
     raw_counts = list(counter.items())
@@ -494,7 +498,6 @@ UNKNOWN_CHAR = 'ⓤ'
 PAD_CHAR = '℗'
 
 
-char2index, index2char = create_char_vocabulary(corpus_gram.values)
 sentences_train=corpus_gram.iloc[:train.shape[0]]
 sentences_test=corpus_gram.iloc[train.shape[0]:]
 
@@ -523,11 +526,24 @@ train["comment_text"]=train_cl["comment_text"].iloc[:train.shape[0]]
 char_toxic=train.loc[train["clean"]==0,"char"]
 
 
-#===========char embedding training================
+#===========char embedding training and get the embedding matrix================
+
+char_embed_size=50
+nb_char=len(char2index)
+
+
+list_container=[]
+for article in container:
+    char_ngram_article=char_ngram(article,ngram=2)
+    list_container.append(char_ngram_article)
+char2index, index2char = create_char_vocabulary(list_container,min_count_chars=20)
+
 
 from gensim.models import Word2Vec
-    
-model= Word2Vec(sentences=char_toxic, size=50, window=100, min_count=50, workers=2000, sg=0)  
+
+article_in=' '.join(list_container)
+model= Word2Vec(sentences=article_in, size=char_embed_size, window=100, min_count=20, workers=2000, sg=0)
+
 
 model.save('mymodel_toxic')
 
@@ -538,6 +554,15 @@ np.save(open("self_train_weight_toxic.npz", 'wb'), weights_char)
 
 
 #weights_char=np.load(open("self_train_weight_toxic.npz", 'rb'))
+
+
+
+char_embedding_matrix = np.zeros((nb_char, char_embed_size))
+for word in char2index:
+    idx=char2index[word]
+    if word in model.wv:
+        char_embedding_matrix[idx] = model[word]
+print('Null word embeddings: %d' % np.sum(np.sum(char_embedding_matrix, axis=1) == 0))
 
 
 
@@ -661,13 +686,13 @@ model = FastText.load_fasttext_format('wiki.en')
 
 nb_words= min(max_features, len(tokenizer.word_index))
 
-embedding_matrix = np.zeros((nb_words, embed_size))
+word_embedding_matrix = np.zeros((nb_words, embed_size))
 for word, i in tokenizer.word_index.items():
     if i >= nb_words:
         continue
     if word in model.wv:
-        embedding_matrix[i] = model[word]
-print('Null word embeddings: %d' % np.sum(np.sum(embedding_matrix, axis=1) == 0))
+        word_embedding_matrix[i] = model[word]
+print('Null word embeddings: %d' % np.sum(np.sum(word_embedding_matrix, axis=1) == 0))
 
 
 
@@ -692,8 +717,8 @@ seed(1)
 def bigru_pool_model_multi_input(hidden_dim_1=136,hidden_dim_2=50):
     main_input=Input(shape=(maxlen,),name='main_input')#, name='main_input'
     Ngram_input= Input(shape=(maxlen_char,), name='aux_input')#, name='aux_input'
-    embedded_sequences= Embedding(max_features, embed_size,weights=[embedding_matrix],trainable=False)(main_input)
-    embedded_sequences_2= Embedding(weights_char.shape[0], 50,weights=[weights_char],trainable=True)(Ngram_input)
+    embedded_sequences= Embedding(max_features, embed_size,weights=[word_embedding_matrix],trainable=False)(main_input)
+    embedded_sequences_2= Embedding(weights_char.shape[0], 50,weights=[char_embedding_matrix],trainable=True)(Ngram_input)
     
     #word level
     x=SpatialDropout1D(0.22)(embedded_sequences)                    #0.1
