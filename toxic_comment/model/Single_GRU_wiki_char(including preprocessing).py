@@ -516,8 +516,11 @@ print("X_te_2 std length:"+ str(np.std(totalNumWords )))
 
 maxlen_char=720  #540
 
-X_tr_2 = char2seq(sentences_train,maxlen_char)
-X_te_2 = char2seq(sentences_test,maxlen_char)
+
+sentences_train_bi=char_ngram(sentences_train,ngram=2)
+sentences_test_bi=char_ngram(sentences_test,ngram=2)
+X_tr_2 = char2seq(sentences_train_bi,maxlen_char)
+X_te_2 = char2seq(sentences_test_bi,maxlen_char)
 
 
 
