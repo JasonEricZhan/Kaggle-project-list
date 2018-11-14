@@ -497,7 +497,7 @@ def char2seq(texts, maxlen):
                 id = char2index[char]
                 seq[l] = id
             except KeyError:
-                seq[l] = char2index[UNKNOWN_CHAR]
+                seq[l] = char2index[UNKNOWN_CHAR]  #if it is error, please replace it by 0
         seq = seq[:maxlen]
         res[k][:len(seq)] = seq
     return res
@@ -541,7 +541,7 @@ char_toxic=train.loc[train["clean"]==0,"char"]
 #===========char embedding training and get the embedding matrix================
 
 
-char2index, index2char = create_char_vocabulary(corpus_gram.values(),min_count_chars=20)
+char2index, index2char = create_char_vocabulary_ngram(corpus_gram.values(),min_count_chars=20)
 
 
 list_container=[]
