@@ -459,14 +459,14 @@ print(df['avg_sent_length'].describe())
 from collections import Counter
 
 # part from Dieter
-def create_char_vocabulary_ngram(texts_arr,ngram=3,min_count_chars=50):
+def create_char_vocabulary_ngram(texts_arr,ngram_in=3,min_count_chars=50):
     idx=0
     for article in texts_arr:
         texts_arr[idx]=article.lower()
         idx+=1
     char_dict = {}
     for k, text in enumerate(texts_arr):
-        ngram_text=char_ngram(text,ngram=3)
+        ngram_text=char_ngram(text,ngram=ngram_in)
         list_char=ngram_text.split("-:-")
         for char in list_char:
             if char not in char_dict:
